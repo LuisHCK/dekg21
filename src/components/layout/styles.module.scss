@@ -1,0 +1,8 @@
+.main_content {
+    margin-left: 256px !important;
+    margin-top: 56px;
+
+    @media (max-width: 600px) {
+        margin-left: 0px !important;
+    }
+}

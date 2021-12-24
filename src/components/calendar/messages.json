@@ -1,0 +1,17 @@
+{
+    "date": "Fecha",
+    "time": "Hora",
+    "event": "Evento",
+    "allDay": "Todo el dia",
+    "week": "Semana",
+    "work_week": "Semana laboral",
+    "day": "Día",
+    "month": "Mes",
+    "previous": "Atrás",
+    "next": "Siguiente",
+    "yesterday": "Ayer",
+    "tomorrow": "Mañana",
+    "today": "Hoy",
+    "agenda": "Agenda",
+    "noEventsInRange": "No hay eventos en este rango."
+}
