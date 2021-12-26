@@ -17,7 +17,11 @@ const EmployeeCard = ({ employee }: TProps): React.ReactElement => {
             <Row className="g-0">
                 <Col xs="3" className="p-2 d-flex align-items-center justify-content-center">
                     <Image
-                        src={getAssetPath(employee.photo?.url)}
+                        src={
+                            employee.photo
+                                ? getAssetPath(employee.photo?.url)
+                                : '/img/default-avatar.jpg'
+                        }
                         className={styles.avatar}
                         roundedCircle
                     />
@@ -41,14 +45,15 @@ const EmployeeCard = ({ employee }: TProps): React.ReactElement => {
                         <Button
                             // @ts-ignore
                             as={Link}
-                            to={getRouteWithParams(ROUTER_PATHS.EMPLOYEES.EDIT, [
+                            to={getRouteWithParams(ROUTER_PATHS.EMPLOYEES.SHOW, [
                                 {
                                     key: 'id',
                                     value: employee.id,
                                 },
                             ])}
+                            variant="secondary"
                         >
-                            Editar
+                            Ver detalles
                         </Button>
                     </Card.Footer>
                 </Col>

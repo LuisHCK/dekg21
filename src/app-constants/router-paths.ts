@@ -14,6 +14,7 @@ export const ROUTER_PATHS = {
         ROOT: '/empleados',
         ADD: '/empleados/crear',
         EDIT: '/empleados/editar/:id',
+        SHOW: '/empleados/detalles/:id',
     },
     MAINTENANCE_ORDERS: {
         ROOT: '/ordenes-de-mantenimiento',

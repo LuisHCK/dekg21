@@ -3,6 +3,7 @@ import { ROUTER_PATHS } from 'app-constants/router-paths'
 import { AppRoute } from 'types'
 import EmployeeListPage from 'pages/employee-list'
 import EmployeeFormPage from 'pages/employee-form'
+import EmployeeDetailsPage from 'pages/employee-details'
 
 const LoginPage = React.lazy(() => import('pages/login'))
 const DashboardPage = React.lazy(() => import('pages/dashboard'))
@@ -50,6 +51,12 @@ const APP_ROUTES: AppRoute[] = [
     {
         path: [ROUTER_PATHS.EMPLOYEES.ADD, ROUTER_PATHS.EMPLOYEES.EDIT],
         component: EmployeeFormPage,
+        exact: true,
+        isPublic: false,
+    },
+    {
+        path: ROUTER_PATHS.EMPLOYEES.SHOW,
+        component: EmployeeDetailsPage,
         exact: true,
         isPublic: false,
     },
