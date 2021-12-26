@@ -46,7 +46,7 @@ export type TFormField = {
     label: string
     inputHTMLType?: HTMLInputTypeAttribute
     renderAs?: 'input' | 'textarea' | ElementType
-    inputKind?: 'text' | 'check' | 'range' | 'select' | 'file'
+    nativeType?: 'text' | 'check' | 'range' | 'select' | 'file'
     required?: boolean
     placeholder?: string
     value?: string | number

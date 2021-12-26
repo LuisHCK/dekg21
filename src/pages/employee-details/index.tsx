@@ -23,7 +23,7 @@ const EmployeeDetailsPage = (): React.ReactElement => {
     const renderField = (formfield: TFormField) => {
         const fieldData: TAsset | string | number | undefined = get(currentEmployee, formfield.name)
 
-        if (formfield.inputKind === 'file') {
+        if (formfield.nativeType === 'file') {
             const data = typeof fieldData === 'object' ? fieldData : undefined
 
             return (

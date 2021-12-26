@@ -8,7 +8,7 @@ const machineForm: TMachineryForm = {
             title: 'Información básica',
             fields: [
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'name',
                     label: 'Nombre',
                     inputHTMLType: 'text',
@@ -16,7 +16,7 @@ const machineForm: TMachineryForm = {
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     renderAs: 'textarea',
                     name: 'description',
                     label: 'Descripción',
@@ -32,21 +32,21 @@ const machineForm: TMachineryForm = {
             title: 'Información Técnica',
             fields: [
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'brand',
                     label: 'Marca',
                     inputHTMLType: 'text',
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'model',
                     label: 'Modelo',
                     inputHTMLType: 'text',
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'power',
                     label: 'Potencia',
                     inputHTMLType: 'text',
@@ -54,14 +54,14 @@ const machineForm: TMachineryForm = {
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'productivity',
                     label: 'Productividad',
                     inputHTMLType: 'text',
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'voltage',
                     label: 'Voltaje',
                     placeholder: 'Voltios',
@@ -69,7 +69,7 @@ const machineForm: TMachineryForm = {
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'supply',
                     label: 'Suministro',
                     placeholder: 'Tipo de suministro eléctrico',
@@ -77,7 +77,7 @@ const machineForm: TMachineryForm = {
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'lifespan',
                     label: 'Vida útil',
                     inputHTMLType: 'text',
@@ -85,7 +85,7 @@ const machineForm: TMachineryForm = {
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'weightKg',
                     label: 'Peso/Kg',
                     inputHTMLType: 'text',
@@ -93,14 +93,14 @@ const machineForm: TMachineryForm = {
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'installationRequirements',
                     label: 'Para su instlación requiere',
                     renderAs: 'textarea',
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'electricityConsumptionKw',
                     label: "Consumo específico de energía - Kw/h"
                 }
@@ -112,25 +112,25 @@ const machineForm: TMachineryForm = {
             title: 'Costos de operación',
             fields: [
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'electricityCostKw',
                     label: 'Costo de electricidad - Kw/h',
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'spareParts',
                     label: 'Repuestos que utiliza',
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'supplies',
                     label: 'Insumos que requiere',
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'laborRequired',
                     label: 'Mano de obra necesaria',
                     colProps: { xs: 12, md: 6 },
@@ -142,7 +142,7 @@ const machineForm: TMachineryForm = {
             title: 'Recomendaciones',
             fields: [
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     renderAs: 'textarea',
                     name: 'laborRequired',
                     label: 'Mano de obra necesaria',
@@ -156,39 +156,39 @@ const machineForm: TMachineryForm = {
             title: 'Donde se puede comprar',
             fields: [
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'supplierName',
                     label: 'Empresa que comercializa',
                     required: true,
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'approximateCost',
                     label: 'Costo aproximado',
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'warrantyYrs',
                     label: 'Garantía/Años',
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'storeAddress',
                     label: 'Dirección de la tienda',
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'phones',
                     label: 'Teléfonos',
                     placeholder: 'Separados por coma',
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'email',
                     label: 'Correos',
                     placeholder: 'Separados por coma',
@@ -201,7 +201,7 @@ const machineForm: TMachineryForm = {
             title: 'Foto',
             fields: [
                 {
-                    inputKind: 'file',
+                    nativeType: 'file',
                     name: 'photo',
                     label: 'Foto',
                     colProps: { xs: 12, md: 6 },

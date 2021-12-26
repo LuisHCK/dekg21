@@ -7,7 +7,7 @@ export const employeeForm: TMachineryForm = {
             title: 'Información básica',
             fields: [
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'firstName',
                     label: 'Nombre',
                     inputHTMLType: 'text',
@@ -15,7 +15,7 @@ export const employeeForm: TMachineryForm = {
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'lastName',
                     label: 'Apellido',
                     inputHTMLType: 'text',
@@ -23,7 +23,7 @@ export const employeeForm: TMachineryForm = {
                     colProps: { xs: 12, md: 6 },
                 },
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'identificationCardId',
                     label: 'Cédula',
                     inputHTMLType: 'text',
@@ -36,7 +36,7 @@ export const employeeForm: TMachineryForm = {
             title: 'Información de contacto',
             fields: [
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'phone',
                     label: 'Teléfono',
                     inputHTMLType: 'tel',
@@ -49,7 +49,7 @@ export const employeeForm: TMachineryForm = {
             title: 'Otros',
             fields: [
                 {
-                    inputKind: 'text',
+                    nativeType: 'text',
                     name: 'role',
                     label: 'Cargo',
                     inputHTMLType: 'text',
@@ -63,7 +63,7 @@ export const employeeForm: TMachineryForm = {
             title: 'Foto',
             fields: [
                 {
-                    inputKind: 'file',
+                    nativeType: 'file',
                     name: 'photo',
                     label: 'Foto',
                     colProps: { xs: 12, md: 6 },

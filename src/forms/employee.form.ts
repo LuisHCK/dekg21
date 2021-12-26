@@ -31,7 +31,7 @@ export const EmployeeForm: TEmployeeFormm = {
                     label: 'Cédula',
                 },
                 {
-                    inputKind: 'file',
+                    nativeType: 'file',
                     inputHTMLType: 'file',
                     name: 'photo',
                     label: 'Foto',
@@ -61,7 +61,7 @@ export const EmployeeForm: TEmployeeFormm = {
                     value: '',
                 },
                 {
-                    inputKind: 'select',
+                    nativeType: 'select',
                     name: 'status',
                     label: 'Estatus',
                     options: [

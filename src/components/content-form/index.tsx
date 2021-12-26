@@ -54,7 +54,7 @@ const ContentForm = ({ form, onChange, hideTitle }: TProps): React.ReactElement 
     }
 
     const renderInputField = (field: TFormField) => {
-        switch (field.inputKind) {
+        switch (field.nativeType) {
             case 'text':
                 return (
                     <Form.Control
