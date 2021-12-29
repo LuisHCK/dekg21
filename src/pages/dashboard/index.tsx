@@ -49,7 +49,7 @@ const DasboardPage = (): React.ReactElement => {
                             <Button
                                 // @ts-ignore
                                 as={Link}
-                                to={ROUTER_PATHS.MAINTENANCE_ORDERS.ROOT}
+                                to={ROUTER_PATHS.MAINTENANCE_REGISTER.ROOT}
                                 variant="primary"
                             >
                                 Ver todas

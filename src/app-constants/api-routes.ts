@@ -17,6 +17,10 @@ const API_ROUTES = {
     ASSETS: {
         ROOT: '/upload',
     },
+    MAINTENANCE_REGISTER: {
+        ROOT: '/maintenance-registers',
+        BY_ID: (id: string | number): string => `/maintenance-registers/${id}`,
+    },
 }
 
 export default API_ROUTES

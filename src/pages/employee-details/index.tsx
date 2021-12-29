@@ -60,7 +60,7 @@ const EmployeeDetailsPage = (): React.ReactElement => {
             <PageTitle title="Detalles del empleado">
                 <Button
                     as={Link as any}
-                    to={getRouteWithParams(ROUTER_PATHS.EMPLOYEES.EDIT, [{ key: 'id', value: 1 }])}
+                    to={getRouteWithParams(ROUTER_PATHS.EMPLOYEES.EDIT, [{ key: 'id', value: id }])}
                     variant="primary"
                 >
                     Editar empleado

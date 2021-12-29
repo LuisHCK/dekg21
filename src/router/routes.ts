@@ -10,6 +10,8 @@ const DashboardPage = React.lazy(() => import('pages/dashboard'))
 const MachineryPage = React.lazy(() => import('pages/machinery'))
 const MachineryFormPage = React.lazy(() => import('pages/machine-form'))
 const MachineryDetailsPage = React.lazy(() => import('pages/machinery-details'))
+const MaintenanceRegisterFormPage = React.lazy(() => import('pages/maintenance-register-form'))
+const MaintenanceRegisterPage = React.lazy(() => import('pages/maintenace-register'))
 
 const APP_ROUTES: AppRoute[] = [
     {
@@ -57,6 +59,18 @@ const APP_ROUTES: AppRoute[] = [
     {
         path: ROUTER_PATHS.EMPLOYEES.SHOW,
         component: EmployeeDetailsPage,
+        exact: true,
+        isPublic: false,
+    },
+    {
+        path: ROUTER_PATHS.MAINTENANCE_REGISTER.ROOT,
+        component: MaintenanceRegisterPage,
+        exact: true,
+        isPublic: false,
+    },
+    {
+        path: [ROUTER_PATHS.MAINTENANCE_REGISTER.EDIT, ROUTER_PATHS.MAINTENANCE_REGISTER.ADD],
+        component: MaintenanceRegisterFormPage,
         exact: true,
         isPublic: false,
     },

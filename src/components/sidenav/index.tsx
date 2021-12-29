@@ -3,6 +3,7 @@ import React from 'react'
 import { ReactComponent as IconHome } from 'bootstrap-icons/icons/house.svg'
 import { ReactComponent as IconNut } from 'bootstrap-icons/icons/nut.svg'
 import { ReactComponent as IconPeople } from 'bootstrap-icons/icons/people.svg'
+import { ReactComponent as IconWrench } from 'bootstrap-icons/icons/wrench.svg'
 
 import NavLink from './navlink'
 
@@ -24,6 +25,11 @@ const navLinks = [
         to: ROUTER_PATHS.EMPLOYEES.ROOT,
         label: 'Empleados',
         icon: IconPeople,
+    },
+    {
+        to: ROUTER_PATHS.MAINTENANCE_REGISTER.ROOT,
+        label: 'Registro de mantenimiento',
+        icon: IconWrench,
     },
 ]
 

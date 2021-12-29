@@ -6,6 +6,7 @@ import { ReactComponent as IconTelephone } from 'bootstrap-icons/icons/telephone
 import styles from './styles.module.scss'
 import { Link } from 'react-router-dom'
 import { ROUTER_PATHS } from 'app-constants/router-paths'
+import classNames from 'classnames'
 
 type TProps = {
     employee: TEmployee
@@ -29,7 +30,12 @@ const EmployeeCard = ({ employee }: TProps): React.ReactElement => {
 
                 <Col xs="9">
                     <Card.Body>
-                        <Card.Title className="d-flex w-100 justify-content-between">
+                        <Card.Title
+                            className={classNames(
+                                'd-flex w-100 justify-content-between',
+                                styles.title,
+                            )}
+                        >
                             <span>
                                 {employee.firstName} {employee.lastName}
                             </span>

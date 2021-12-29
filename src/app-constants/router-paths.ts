@@ -16,7 +16,10 @@ export const ROUTER_PATHS = {
         EDIT: '/empleados/editar/:id',
         SHOW: '/empleados/detalles/:id',
     },
-    MAINTENANCE_ORDERS: {
-        ROOT: '/ordenes-de-mantenimiento',
+    MAINTENANCE_REGISTER: {
+        ROOT: '/registro-de-mantenimiento',
+        ADD: '/registro-de-mantenimiento/crear',
+        EDIT: '/registro-de-mantenimiento/editar/:id',
+        SHOW: '/registro-de-mantenimiento/detalles/:id',
     },
 }

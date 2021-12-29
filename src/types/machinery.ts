@@ -46,7 +46,7 @@ export type TFormField = {
     label: string
     inputHTMLType?: HTMLInputTypeAttribute
     renderAs?: 'input' | 'textarea' | ElementType
-    nativeType?: 'text' | 'check' | 'range' | 'select' | 'file'
+    nativeType?: 'text' | 'textarea' | 'number' | 'check' | 'range' | 'select' | 'file' | 'date'
     required?: boolean
     placeholder?: string
     value?: string | number
@@ -54,8 +54,9 @@ export type TFormField = {
     max?: number
     disabled?: boolean
     hidden?: boolean
-    options?: { key: string; label: string }[]
+    options?: { key: string | number; label: string; disabled?: boolean }[]
     colProps?: ColProps
+    rows?: number
 }
 
 export type TFormSet = {

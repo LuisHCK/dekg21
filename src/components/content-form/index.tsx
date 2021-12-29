@@ -68,6 +68,35 @@ const ContentForm = ({ form, onChange, hideTitle }: TProps): React.ReactElement 
                         onChange={handleInputChange}
                     />
                 )
+            case 'number':
+                return (
+                    <Form.Control
+                        type={field.nativeType}
+                        placeholder={field.placeholder}
+                        value={field.value || ''}
+                        name={field.name}
+                        className={field.className}
+                        required={field.required}
+                        as={field.renderAs}
+                        onChange={handleInputChange}
+                        min={field.min}
+                        max={field.max}
+                    />
+                )
+            case 'textarea':
+                return (
+                    <Form.Control
+                        type={field.inputHTMLType}
+                        placeholder={field.placeholder}
+                        value={field.value || ''}
+                        name={field.name}
+                        className={field.className}
+                        required={field.required}
+                        as="textarea"
+                        onChange={handleInputChange}
+                        rows={field.rows}
+                    />
+                )
             case 'check':
                 return (
                     <Form.Check
@@ -93,6 +122,7 @@ const ContentForm = ({ form, onChange, hideTitle }: TProps): React.ReactElement 
                             <option
                                 key={`option-${option.key}-for-${field.name}`}
                                 value={option.key}
+                                disabled={option.disabled}
                             >
                                 {option.label}
                             </option>
@@ -117,6 +147,21 @@ const ContentForm = ({ form, onChange, hideTitle }: TProps): React.ReactElement 
                         required={field.required}
                         className={field.className}
                         onChange={handleInputFileChange}
+                    />
+                )
+            case 'date':
+                return (
+                    <Form.Control
+                        type={field.nativeType}
+                        placeholder={field.placeholder}
+                        value={field.value || ''}
+                        name={field.name}
+                        className={field.className}
+                        required={field.required}
+                        as={field.renderAs}
+                        onChange={handleInputChange}
+                        min={field.min}
+                        max={field.max}
                     />
                 )
 

@@ -4,6 +4,7 @@ import { configReducer } from './reducers/config.reducer'
 import { machineryReducer } from './reducers/machinery.reducer'
 import { navigationReducer } from './reducers/navigation'
 import { employeeReducer } from './reducers/employee.reducer'
+import maintenanceRegisterReducer from './reducers/maintenance-register.reducer'
 
 export const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
         config: configReducer,
         machinery: machineryReducer,
         employee: employeeReducer,
+        maintenanceRegister: maintenanceRegisterReducer,
     },
 })
 

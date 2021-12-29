@@ -5,13 +5,21 @@ import PrivateRoute from './private-route'
 import APP_ROUTES from './routes'
 
 const AppRouter = (): React.ReactElement => {
+    const getRouteKey = (path: string | string[]): string => {
+        if (typeof path === 'object') {
+            return path[0]
+        }
+
+        return path
+    }
+
     return (
         <React.Suspense fallback={<span>Cargando...</span>}>
             <Router>
                 <Switch>
                     {APP_ROUTES.filter((route) => route.isPublic).map((route) => (
                         <Route
-                            key={`public-route${route.path}`}
+                            key={`public-route${getRouteKey(route.path)}`}
                             path={route.path}
                             exact={route.exact}
                         >
@@ -23,7 +31,7 @@ const AppRouter = (): React.ReactElement => {
                         <AppLayout>
                             {APP_ROUTES.filter((route) => !route.isPublic).map((route) => (
                                 <PrivateRoute
-                                    key={`private-route${route.path}`}
+                                    key={`private-route${getRouteKey(route.path)}`}
                                     path={route.path}
                                     exact={route.exact}
                                 >
