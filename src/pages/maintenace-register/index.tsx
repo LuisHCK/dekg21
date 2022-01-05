@@ -13,7 +13,7 @@ import { getRouteWithParams } from 'utils/services'
 import MaintenanceRegisterDetails from 'components/maintenance-register-details'
 
 const MainteanceRegisterPage = (): React.ReactElement => {
-    const { loading, registers } = useSelector(SELECT_MAINTENANCE_STATE)
+    const { registers } = useSelector(SELECT_MAINTENANCE_STATE)
     const [showDetails, setShowDetails] = useState<boolean>(false)
     const [selectedRegister, setSelectedRegister] = useState<TMaintenanceRegister | undefined>(
         undefined,
