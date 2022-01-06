@@ -117,6 +117,7 @@ const MaintenanceRegisterDetails = ({ show, onClose, register }: TProps): React.
                 </Row>
             </Modal.Body>
             <Modal.Footer>
+                sadasd
                 <Button variant="secondary" onClick={onClose}>
                     Cerrar
                 </Button>

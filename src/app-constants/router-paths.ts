@@ -22,4 +22,10 @@ export const ROUTER_PATHS = {
         EDIT: '/registro-de-mantenimiento/editar/:id',
         SHOW: '/registro-de-mantenimiento/detalles/:id',
     },
+    WORK_ORDER: {
+        ROOT: '/ordenes-de-trabajo',
+        ADD: '/ordenes-de-trabajo/crear',
+        EDIT: '/ordenes-de-trabajo/editar/:id',
+        SHOW: '/ordenes-de-trabajo/detalles/:id',
+    },
 }

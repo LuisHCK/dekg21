@@ -12,6 +12,7 @@ const MachineryFormPage = React.lazy(() => import('pages/machine-form'))
 const MachineryDetailsPage = React.lazy(() => import('pages/machinery-details'))
 const MaintenanceRegisterFormPage = React.lazy(() => import('pages/maintenance-register-form'))
 const MaintenanceRegisterPage = React.lazy(() => import('pages/maintenace-register'))
+const WorkOrdersPage = React.lazy(() => import('pages/work-orders'))
 
 const APP_ROUTES: AppRoute[] = [
     {
@@ -24,55 +25,51 @@ const APP_ROUTES: AppRoute[] = [
         path: [ROUTER_PATHS.HOME.ROOT, ROUTER_PATHS.HOME.ALT],
         component: DashboardPage,
         exact: true,
-        isPublic: false,
     },
     {
         path: ROUTER_PATHS.MACHINERY.ROOT,
         component: MachineryPage,
         exact: true,
-        isPublic: false,
     },
     {
         path: [ROUTER_PATHS.MACHINERY.ADD, ROUTER_PATHS.MACHINERY.EDIT],
         component: MachineryFormPage,
         exact: true,
-        isPublic: false,
     },
     {
         path: ROUTER_PATHS.MACHINERY.SHOW,
         component: MachineryDetailsPage,
         exact: true,
-        isPublic: false,
     },
     {
         path: ROUTER_PATHS.EMPLOYEES.ROOT,
         component: EmployeeListPage,
         exact: true,
-        isPublic: false,
     },
     {
         path: [ROUTER_PATHS.EMPLOYEES.ADD, ROUTER_PATHS.EMPLOYEES.EDIT],
         component: EmployeeFormPage,
         exact: true,
-        isPublic: false,
     },
     {
         path: ROUTER_PATHS.EMPLOYEES.SHOW,
         component: EmployeeDetailsPage,
         exact: true,
-        isPublic: false,
     },
     {
         path: ROUTER_PATHS.MAINTENANCE_REGISTER.ROOT,
         component: MaintenanceRegisterPage,
         exact: true,
-        isPublic: false,
     },
     {
         path: [ROUTER_PATHS.MAINTENANCE_REGISTER.EDIT, ROUTER_PATHS.MAINTENANCE_REGISTER.ADD],
         component: MaintenanceRegisterFormPage,
         exact: true,
-        isPublic: false,
+    },
+    {
+        path: ROUTER_PATHS.WORK_ORDER.ROOT,
+        component: WorkOrdersPage,
+        exact: true,
     },
 ]
 

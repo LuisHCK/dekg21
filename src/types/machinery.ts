@@ -52,6 +52,7 @@ export type TFormField = {
     value?: string | number
     min?: number
     max?: number
+    step?: string
     disabled?: boolean
     hidden?: boolean
     options?: { key: string | number; label: string; disabled?: boolean }[]

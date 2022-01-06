@@ -4,6 +4,7 @@ import { TMachineryState } from './machinery'
 import { TMaintenanceRegisterState } from './maintenance-register'
 import { INavigationState } from './ui'
 import { IAuthState, IUsersState } from './user'
+import { TWorkOrderState } from './work-order'
 
 export interface IAppState {
     auth: IAuthState
@@ -13,4 +14,5 @@ export interface IAppState {
     machinery: TMachineryState
     employee: TEmployeeState
     maintenanceRegister: TMaintenanceRegisterState
+    workOrder: TWorkOrderState
 }
