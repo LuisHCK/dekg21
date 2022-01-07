@@ -29,7 +29,7 @@ export type TMachinery = {
     email: string
     weightKG: string
     voltages: string
-    photo: TAsset | number
+    photo: TAsset
 }
 
 export type TMachineryState = {

@@ -18,7 +18,7 @@ const WorkOrderDetails = ({ show, onClose }: TWorkDetailsProps): React.ReactElem
     const { currentOrder } = useSelector(SELECT_WORK_ORDER_STATE)
 
     return (
-        <Modal show={show} onHide={onClose} size="lg">
+        <Modal show={show} onHide={onClose} size="xl">
             <Modal.Header closeButton>
                 <Modal.Title>Orden No. {currentOrder?.id}</Modal.Title>
             </Modal.Header>
@@ -48,30 +48,81 @@ const WorkOrderDetails = ({ show, onClose }: TWorkDetailsProps): React.ReactElem
                                         ? 'Correctivo'
                                         : 'Preventivo'}
                                 </ListGroupItem>
+                                <ListGroupItem>
+                                    <b>Descripción: </b>
+                                    <p className={styles.paragraph}>{currentOrder?.description}</p>
+                                </ListGroupItem>
                             </ListGroup>
                         </Card.Body>
                     </Card>
 
                     <Card>
-                        <Card.Header className="app-card-header">Informacíon básica</Card.Header>
+                        <Card.Header className="app-card-header">Máquina</Card.Header>
 
                         <Card.Body>
                             <ListGroup variant="flush">
                                 <ListGroupItem>
-                                    <b>Fecha: </b>
-                                    {moment(currentOrder?.date).format('DD/MM/YYYY')}
+                                    <b>Nombre: </b>
+                                    {currentOrder?.machine.name}
                                 </ListGroupItem>
                                 <ListGroupItem>
-                                    <b>Area/Planta: </b>
-                                    {currentOrder?.area}x
+                                    <b>Marca: </b>
+                                    {currentOrder?.machine.brand}
                                 </ListGroupItem>
                                 <ListGroupItem>
-                                    <b>Tipo: </b>
-                                    {currentOrder?.type === 'corrective'
-                                        ? 'Correctivo'
-                                        : 'Preventivo'}
+                                    <img
+                                        className="img-thumbnail"
+                                        src={getAssetPath(currentOrder?.machine.photo?.url)}
+                                    />
                                 </ListGroupItem>
                             </ListGroup>
+                        </Card.Body>
+                    </Card>
+
+                    <Card>
+                        <Card.Header className="app-card-header">Técnico</Card.Header>
+
+                        <Card.Body>
+                            <ListGroup variant="flush">
+                                <ListGroupItem>
+                                    <b>Nombre: </b>
+                                    {currentOrder?.employee.firstName}{' '}
+                                    {currentOrder?.employee.lastName}
+                                </ListGroupItem>
+                                <ListGroupItem>
+                                    <b>Cargo: </b>
+                                    {currentOrder?.employee.role}
+                                </ListGroupItem>
+                            </ListGroup>
+                        </Card.Body>
+                    </Card>
+
+                    <Card>
+                        <Card.Header className="app-card-header">Costo</Card.Header>
+
+                        <Card.Body>
+                            <ListGroup variant="flush">
+                                <ListGroupItem>
+                                    <b>Costo total: </b>
+                                    {currentOrder?.cost}
+                                </ListGroupItem>
+                            </ListGroup>
+                        </Card.Body>
+                    </Card>
+
+                    <Card>
+                        <Card.Header className="app-card-header">Repuestos utilizados</Card.Header>
+
+                        <Card.Body>
+                            <p>{currentOrder?.partsUsed}</p>
+                        </Card.Body>
+                    </Card>
+
+                    <Card>
+                        <Card.Header className="app-card-header">Observaciones</Card.Header>
+
+                        <Card.Body>
+                            <p className={styles.paragraph}>{currentOrder?.observations}</p>
                         </Card.Body>
                     </Card>
                 </Masonry>
