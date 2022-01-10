@@ -1,5 +1,6 @@
 import { IConfig } from './config'
 import { TEmployeeState } from './employee'
+import { TInventoryState } from './inventory'
 import { TMachineryState } from './machinery'
 import { TMaintenanceRegisterState } from './maintenance-register'
 import { INavigationState } from './ui'
@@ -15,4 +16,5 @@ export interface IAppState {
     employee: TEmployeeState
     maintenanceRegister: TMaintenanceRegisterState
     workOrder: TWorkOrderState
+    inventory: TInventoryState
 }

@@ -25,6 +25,10 @@ const API_ROUTES = {
         ROOT: '/work-orders',
         BY_ID: (id: string | number): string => `/work-orders/${id}`,
     },
+    PARTS: {
+        ROOT: '/parts',
+        BY_ID: (id: string | number): string => `/parts/${id}`,
+    },
 }
 
 export default API_ROUTES

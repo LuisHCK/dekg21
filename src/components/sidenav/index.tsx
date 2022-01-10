@@ -5,6 +5,7 @@ import { ReactComponent as IconNut } from 'bootstrap-icons/icons/nut.svg'
 import { ReactComponent as IconPeople } from 'bootstrap-icons/icons/people.svg'
 import { ReactComponent as IconWrench } from 'bootstrap-icons/icons/wrench.svg'
 import { ReactComponent as IconJournal } from 'bootstrap-icons/icons/journal-check.svg'
+import { ReactComponent as IconList } from 'bootstrap-icons/icons/list-task.svg'
 
 import NavLink from './navlink'
 
@@ -36,6 +37,11 @@ const navLinks = [
         to: ROUTER_PATHS.WORK_ORDER.ROOT,
         label: 'Órdenes de trabajo',
         icon: IconJournal,
+    },
+    {
+        to: ROUTER_PATHS.INVENTORY.ROOT,
+        label: 'Inventario',
+        icon: IconList,
     },
 ]
 

@@ -28,4 +28,10 @@ export const ROUTER_PATHS = {
         EDIT: '/ordenes-de-trabajo/editar/:id',
         SHOW: '/ordenes-de-trabajo/detalles/:id',
     },
+    INVENTORY: {
+        ROOT: '/inventario',
+        ADD: '/inventario/crear',
+        EDIT: '/inventario/editar/:id',
+        SHOW: '/inventario/detalles/:id',
+    },
 }
