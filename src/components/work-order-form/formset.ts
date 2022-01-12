@@ -1,5 +1,6 @@
 import { get } from 'lodash'
 import { TEmployee } from 'types/employee'
+import { TPart } from 'types/inventory'
 import { TFormSet, TMachinery } from 'types/machinery'
 import { TWorkOrder } from 'types/work-order'
 
@@ -18,6 +19,7 @@ const defaultEmployee = {
 export const buildFormset = (
     machines: TMachinery[],
     employees: TEmployee[],
+    parts?: TPart[],
     workOrder?: TWorkOrder,
 ): TFormSet => ({
     id: 'workOrder',
@@ -44,10 +46,7 @@ export const buildFormset = (
             nativeType: 'select',
             label: 'Maquina',
             required: true,
-            options: [
-                defaultMachine,
-                ...machines.map((machine) => ({ label: machine.name, key: machine.id })),
-            ],
+            options: machines.map((machine) => ({ label: machine.name, key: machine.id })),
             value: get(workOrder, 'machine.id'),
             className: 'col-xs-12 col-sm-6',
         },
@@ -71,11 +70,15 @@ export const buildFormset = (
             className: 'col-xs-12 col-sm-12',
         },
         {
-            name: 'partsUsed',
-            nativeType: 'textarea',
+            name: 'partUsed',
+            nativeType: 'component',
             label: 'Repuestos utilizados',
-            value: get(workOrder, 'partsUsed'),
+            value: get(workOrder, 'partUsed'),
             className: 'col-xs-12 col-sm-12',
+            options: parts?.map((part) => ({
+                key: part.id,
+                label: `${part.name} - ${part.content}${part.unit}`,
+            })),
         },
         {
             name: 'cost',
@@ -89,13 +92,10 @@ export const buildFormset = (
             name: 'employee',
             nativeType: 'select',
             label: 'Técnico',
-            options: [
-                defaultEmployee,
-                ...employees.map((employee) => ({
-                    key: employee.id,
-                    label: `${employee.firstName} ${employee.lastName}`,
-                })),
-            ],
+            options: employees.map((employee) => ({
+                key: employee.id,
+                label: `${employee.firstName} ${employee.lastName}`,
+            })),
             value: get(workOrder, 'employee.id'),
             className: 'col-xs-12 col-sm-4',
         },

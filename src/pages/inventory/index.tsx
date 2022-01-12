@@ -3,18 +3,43 @@ import PageTitle from 'components/page-title'
 import { Button, ButtonGroup, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { SELECT_INVENTORY_STATE } from 'store/selectors/inventory.selector'
-import { GET_ALL_PARTS, TOGGLE_PART_FORM } from 'store/actions/inventory.actions'
+import {
+    CLEAN_CURRENT_PART,
+    CREATE_PART,
+    GET_ALL_PARTS,
+    GET_CURRENT_PART,
+    TOGGLE_PART_FORM,
+    UPDATE_PART,
+} from 'store/actions/inventory.actions'
 import InventoryPartForm from 'components/inventory-part-form'
+import { TPart } from 'types/inventory'
 
 const InventoryPage = (): React.ReactElement => {
     const dispatch = useDispatch()
-    const { parts, showForm } = useSelector(SELECT_INVENTORY_STATE)
+    const { parts, showForm, currentPart } = useSelector(SELECT_INVENTORY_STATE)
 
-    const openEdit = () => {
-        //
+    const openEdit = async (part: TPart) => {
+        await dispatch(GET_CURRENT_PART({ id: part.id }))
+        toggleForm()
+    }
+
+    const openAddPart = () => {
+        dispatch(CLEAN_CURRENT_PART())
+        toggleForm()
     }
 
     const toggleForm = () => dispatch(TOGGLE_PART_FORM())
+
+    const handleSave = async (data: Partial<TPart>) => {
+        if (currentPart) {
+            await dispatch(UPDATE_PART({ id: currentPart.id, data }))
+        } else {
+            await dispatch(CREATE_PART({ data }))
+        }
+
+        dispatch(GET_ALL_PARTS())
+        toggleForm()
+    }
 
     const renderParts = (): React.ReactNode =>
         parts?.map((part) => (
@@ -29,9 +54,9 @@ const InventoryPage = (): React.ReactElement => {
                 <td>C${part.price}</td>
                 <td>{part.stock}</td>
                 <td>
-                    <ButtonGroup>
-                        <Button>Editar</Button>
-                        <Button>Detalles</Button>
+                    <ButtonGroup size="sm">
+                        <Button onClick={() => openEdit(part)}>Editar</Button>
+                        <Button variant="secondary">Detalles</Button>
                     </ButtonGroup>
                 </td>
             </tr>
@@ -44,7 +69,7 @@ const InventoryPage = (): React.ReactElement => {
     return (
         <div>
             <PageTitle title="Inventario">
-                <Button variant="primary" onClick={toggleForm}>
+                <Button variant="primary" onClick={openAddPart}>
                     Agregar repuesto
                 </Button>
             </PageTitle>
@@ -75,7 +100,7 @@ const InventoryPage = (): React.ReactElement => {
                 </tbody>
             </Table>
 
-            <InventoryPartForm show={showForm} onClose={toggleForm} />
+            <InventoryPartForm show={showForm} onClose={toggleForm} onSubmit={handleSave} />
         </div>
     )
 }

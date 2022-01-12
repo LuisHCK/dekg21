@@ -5,8 +5,8 @@ import { TPart } from 'types/inventory'
 import { AxiosResponse } from 'axios'
 
 type TParams = {
-    id: number
-    data?: TPart
+    id?: number
+    data?: Partial<TPart>
 }
 
 export const GET_ALL_PARTS = createAsyncThunk('INVENTORY/GET_ALL_PRODUCTS', async () => {
@@ -17,7 +17,7 @@ export const GET_ALL_PARTS = createAsyncThunk('INVENTORY/GET_ALL_PRODUCTS', asyn
 export const GET_CURRENT_PART = createAsyncThunk(
     'INVENTORY/GET_CURRENT_PART',
     async ({ id }: TParams) => {
-        const response = await HTTPClient.get<TPart>(API_ROUTES.PARTS.BY_ID(id))
+        const response = await HTTPClient.get<TPart>(API_ROUTES.PARTS.BY_ID(id || 0))
         return response.data
     },
 )
@@ -29,6 +29,17 @@ export const CREATE_PART = createAsyncThunk('INVENTORY/CREATE_PART', async ({ da
     )
     return response.data
 })
+
+export const UPDATE_PART = createAsyncThunk(
+    'INVENTORY/CREATE_PART',
+    async ({ id, data }: TParams) => {
+        const response = await HTTPClient.put<Partial<TPart>, AxiosResponse<TPart>>(
+            API_ROUTES.PARTS.BY_ID(id || 0),
+            data,
+        )
+        return response.data
+    },
+)
 
 export const TOGGLE_PART_FORM = createAction('INVENTORY/TOGGLE_PART_FORM')
 

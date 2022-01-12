@@ -1,12 +1,10 @@
 import React from 'react'
-import { get } from 'lodash'
 import moment from 'moment'
-import { Button, Card, Col, ListGroup, ListGroupItem, Modal, Row } from 'react-bootstrap'
+import { Button, Card, ListGroup, ListGroupItem, Modal } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { SELECT_WORK_ORDER_STATE } from 'store/selectors/work-order.selectors'
 import { getAssetPath } from 'utils/services'
 import styles from './styles.module.scss'
-import classNames from 'classnames'
 import Masonry from 'react-masonry-css'
 
 type TWorkDetailsProps = {
@@ -73,6 +71,7 @@ const WorkOrderDetails = ({ show, onClose }: TWorkDetailsProps): React.ReactElem
                                     <img
                                         className="img-thumbnail"
                                         src={getAssetPath(currentOrder?.machine.photo?.url)}
+                                        alt="machine"
                                     />
                                 </ListGroupItem>
                             </ListGroup>

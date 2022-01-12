@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { GET_ALL_EMPLOYEES } from 'store/actions/employee.actions'
+import { GET_ALL_PARTS } from 'store/actions/inventory.actions'
 import { GET_MACHINERY } from 'store/actions/machine.actions'
 import { SELECT_EMPLOYEE_STATE } from 'store/selectors/employee.selector'
+import { SELECT_INVENTORY_STATE } from 'store/selectors/inventory.selector'
 import { SELECT_MACHINERY_STATE } from 'store/selectors/machinery.selector'
 import { SELECT_WORK_ORDER_STATE } from 'store/selectors/work-order.selectors'
 import { TFormSet } from 'types/machinery'
@@ -22,6 +24,7 @@ const WorkOrderForm = ({ onSave, onCancel }: TWorkOrderProps): React.ReactElemen
     const { employees } = useSelector(SELECT_EMPLOYEE_STATE)
     const { machines } = useSelector(SELECT_MACHINERY_STATE)
     const { currentOrder } = useSelector(SELECT_WORK_ORDER_STATE)
+    const { parts } = useSelector(SELECT_INVENTORY_STATE)
     const dispatch = useDispatch()
 
     const handleChange = (data: TFormSet) => {
@@ -36,15 +39,16 @@ const WorkOrderForm = ({ onSave, onCancel }: TWorkOrderProps): React.ReactElemen
     }
 
     useEffect(() => {
-        if (!formset && employees && machines) {
-            const newFormset = buildFormset(machines, employees, currentOrder)
+        if (!formset && employees && machines && parts) {
+            const newFormset = buildFormset(machines, employees, parts, currentOrder)
             setFormset(newFormset)
         }
-    }, [employees, machines, currentOrder, formset])
+    }, [employees, machines, currentOrder, parts, formset])
 
     useEffect(() => {
         dispatch(GET_ALL_EMPLOYEES())
         dispatch(GET_MACHINERY())
+        dispatch(GET_ALL_PARTS())
     }, [dispatch])
 
     return !!formset ? (

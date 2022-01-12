@@ -14,6 +14,7 @@ import { TWorkOrder, TWorkOrderPostBody } from 'types/work-order'
 import WorkOrderForm from 'components/work-order-form'
 import moment from 'moment'
 import WorkOrderDetails from 'components/work-order-details'
+import { GET_ALL_PARTS } from 'store/actions/inventory.actions'
 
 const WorkOrdersPage = (): React.ReactElement => {
     const [showForm, setShowForm] = useState<boolean>(false)
@@ -42,11 +43,11 @@ const WorkOrdersPage = (): React.ReactElement => {
 
     const handleShowDetails = (id: number) => {
         dispatch(GET_CURRENT_WORK_ORDER({ id }))
-        toggleDetails()
     }
 
     useEffect(() => {
         dispatch(GET_WORK_ORDERS())
+        dispatch(GET_ALL_PARTS())
     }, [dispatch])
 
     const renderRows = (): React.ReactNode => {

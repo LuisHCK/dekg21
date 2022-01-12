@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
+import Select from 'react-select'
 import { Alert, Col, Form, Row } from 'react-bootstrap'
 import { TFormField, TFormSet } from 'types/machinery'
 import { assetUpload } from 'utils/services'
@@ -12,6 +13,12 @@ type TProps = {
     hideTitle?: boolean
 }
 
+type TChangeProps = {
+    name: string
+    label?: string | undefined
+    value?: string | number
+}
+
 const ContentForm = ({ form, onChange, hideTitle }: TProps): React.ReactElement => {
     const handleInputChange = ({
         currentTarget: { name, value },
@@ -19,10 +26,8 @@ const ContentForm = ({ form, onChange, hideTitle }: TProps): React.ReactElement 
         onChange({ ...form, fields: insertFields(name, value) })
     }
 
-    const handleSelectChange = ({
-        currentTarget: { name, value },
-    }: React.FormEvent<HTMLSelectElement>) => {
-        onChange({ ...form, fields: insertFields(name, value) })
+    const handleSelectChange = ({ name, value }: TChangeProps) => {
+        onChange({ ...form, fields: insertFields(name, value || '') })
     }
 
     const handleInputFileChange = async ({
@@ -109,25 +114,21 @@ const ContentForm = ({ form, onChange, hideTitle }: TProps): React.ReactElement 
                 )
 
             case 'select':
+                const options = field.options?.map((opt) => ({
+                    value: opt.key,
+                    label: opt.label,
+                }))
                 return (
-                    <Form.Select
-                        aria-label={field.label}
+                    <Select
+                        options={options}
+                        placeholder={field.placeholder}
                         name={field.name}
-                        className={field.className}
-                        value={field.value || ''}
-                        required={field.required}
-                        onChange={handleSelectChange}
-                    >
-                        {field.options?.map((option) => (
-                            <option
-                                key={`option-${option.key}-for-${field.name}`}
-                                value={option.key}
-                                disabled={option.disabled}
-                            >
-                                {option.label}
-                            </option>
-                        ))}
-                    </Form.Select>
+                        value={options?.find((opt) => opt.value === field.value)}
+                        onChange={(opt) => handleSelectChange({ name: field.name, ...opt })}
+                        noOptionsMessage={({ inputValue }) =>
+                            !inputValue ? 'Buscar' : 'No hay resultados'
+                        }
+                    />
                 )
             case 'range':
                 return (

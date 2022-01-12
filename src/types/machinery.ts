@@ -1,4 +1,4 @@
-import { ElementType, HTMLInputTypeAttribute } from 'react'
+import React, { ElementType, HTMLInputTypeAttribute } from 'react'
 import { ColProps } from 'react-bootstrap'
 import { TAsset } from './asset'
 
@@ -46,7 +46,16 @@ export type TFormField = {
     label: string
     inputHTMLType?: HTMLInputTypeAttribute
     renderAs?: 'input' | 'textarea' | ElementType
-    nativeType?: 'text' | 'textarea' | 'number' | 'check' | 'range' | 'select' | 'file' | 'date'
+    nativeType?:
+        | 'text'
+        | 'textarea'
+        | 'number'
+        | 'check'
+        | 'range'
+        | 'select'
+        | 'file'
+        | 'date'
+        | 'component'
     required?: boolean
     placeholder?: string
     value?: string | number
@@ -58,6 +67,7 @@ export type TFormField = {
     options?: { key: string | number; label: string; disabled?: boolean }[]
     colProps?: ColProps
     rows?: number
+    component?: any[]
 }
 
 export type TFormSet = {
