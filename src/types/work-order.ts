@@ -1,4 +1,5 @@
 import { TEmployee } from './employee'
+import { TPart } from './inventory'
 import { TMachinery } from './machinery'
 
 export type TWorkOrder = {
@@ -26,4 +27,11 @@ export type TWorkOrderState = {
     error: boolean
     workOrders?: TWorkOrder[]
     currentOrder?: TWorkOrder
+}
+
+export type TWorkOrderPartUsed = {
+    _tempId?: number
+    id?: number
+    part: Partial<TPart>
+    quantity: number
 }

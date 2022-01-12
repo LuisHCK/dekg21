@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo } from 'react'
 import classNames from 'classnames'
 import Select from 'react-select'
 import { Alert, Col, Form, Row } from 'react-bootstrap'
@@ -11,6 +11,7 @@ type TProps = {
     form: TFormSet
     onChange: (form: TFormSet) => void
     hideTitle?: boolean
+    renderOnly?: { from: number; to: number }
 }
 
 type TChangeProps = {
@@ -19,7 +20,7 @@ type TChangeProps = {
     value?: string | number
 }
 
-const ContentForm = ({ form, onChange, hideTitle }: TProps): React.ReactElement => {
+const ContentForm = ({ form, onChange, hideTitle, renderOnly }: TProps): React.ReactElement => {
     const handleInputChange = ({
         currentTarget: { name, value },
     }: React.ChangeEvent<HTMLInputElements>) => {
@@ -179,6 +180,14 @@ const ContentForm = ({ form, onChange, hideTitle }: TProps): React.ReactElement 
         }
     }
 
+    const fields = useMemo<TFormField[]>(() => {
+        if (renderOnly) {
+            return form.fields.slice(renderOnly.from, renderOnly.to)
+        }
+
+        return form.fields
+    }, [form, renderOnly])
+
     return (
         <Form onSubmit={handleSubmit}>
             {!hideTitle && (
@@ -189,7 +198,7 @@ const ContentForm = ({ form, onChange, hideTitle }: TProps): React.ReactElement 
             )}
 
             <Row>
-                {form.fields.map((field) => (
+                {fields.map((field) => (
                     <Form.Group
                         key={`${form.id}-field-${field.name}`}
                         className={classNames('mb-3', field.className)}
@@ -211,6 +220,7 @@ const ContentForm = ({ form, onChange, hideTitle }: TProps): React.ReactElement 
 
 ContentForm.defaultProps = {
     hideTitle: false,
+    renderOnly: undefined,
 }
 
 export default ContentForm

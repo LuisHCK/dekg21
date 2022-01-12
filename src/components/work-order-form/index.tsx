@@ -1,5 +1,6 @@
 import ContentForm from 'components/content-form'
-import React, { useEffect, useState } from 'react'
+import PartsSelect from 'components/parts-select'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { GET_ALL_EMPLOYEES } from 'store/actions/employee.actions'
@@ -10,7 +11,7 @@ import { SELECT_INVENTORY_STATE } from 'store/selectors/inventory.selector'
 import { SELECT_MACHINERY_STATE } from 'store/selectors/machinery.selector'
 import { SELECT_WORK_ORDER_STATE } from 'store/selectors/work-order.selectors'
 import { TFormSet } from 'types/machinery'
-import { TWorkOrderPostBody } from 'types/work-order'
+import { TWorkOrderPartUsed, TWorkOrderPostBody } from 'types/work-order'
 import { flattenForm } from 'utils/services'
 import { buildFormset } from './formset'
 
@@ -38,6 +39,28 @@ const WorkOrderForm = ({ onSave, onCancel }: TWorkOrderProps): React.ReactElemen
         }
     }
 
+    const handlePartsChange = (parts: any) => {
+        const updatedFields = formset?.fields.map((field) => {
+            if (field.name === 'partUsed') {
+                return { ...field, value: parts }
+            }
+
+            return { ...field }
+        })
+
+        if (updatedFields && formset) setFormset({ ...formset, fields: updatedFields })
+    }
+
+    const partsUsed = useMemo<TWorkOrderPartUsed[]>(() => {
+        const fieldData = formset?.fields.find((field) => field.name === 'partUsed')
+
+        if (fieldData && typeof fieldData.value === 'object') {
+            return fieldData.value as TWorkOrderPartUsed[]
+        }
+
+        return []
+    }, [formset])
+
     useEffect(() => {
         if (!formset && employees && machines && parts) {
             const newFormset = buildFormset(machines, employees, parts, currentOrder)
@@ -53,7 +76,22 @@ const WorkOrderForm = ({ onSave, onCancel }: TWorkOrderProps): React.ReactElemen
 
     return !!formset ? (
         <>
-            <ContentForm onChange={handleChange} form={formset} hideTitle />{' '}
+            <ContentForm
+                onChange={handleChange}
+                form={formset}
+                renderOnly={{ from: 0, to: 5 }}
+                hideTitle
+            />
+
+            {/* parts */}
+            <PartsSelect partsUsed={partsUsed} onChange={handlePartsChange} />
+
+            <ContentForm
+                onChange={handleChange}
+                form={formset}
+                renderOnly={{ from: 6, to: formset.fields.length }}
+                hideTitle
+            />
             <Modal.Footer>
                 <Button variant="primary" onClick={handleSave}>
                     Guardar

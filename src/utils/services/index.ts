@@ -83,3 +83,5 @@ export const formIsValid = (formSets: TFormSet[]): boolean => {
 
     return results.every((r) => r)
 }
+
+export const randomNumber = () => Math.floor(Math.random() * 10 * 1000)

@@ -4,18 +4,6 @@ import { TPart } from 'types/inventory'
 import { TFormSet, TMachinery } from 'types/machinery'
 import { TWorkOrder } from 'types/work-order'
 
-const defaultMachine = {
-    disabled: true,
-    key: '',
-    label: 'Seleccione una máquina',
-}
-
-const defaultEmployee = {
-    disabled: true,
-    key: '',
-    label: 'Seleccione un colaborador',
-}
-
 export const buildFormset = (
     machines: TMachinery[],
     employees: TEmployee[],
