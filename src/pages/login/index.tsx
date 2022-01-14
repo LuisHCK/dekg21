@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { AUTH_LOGIN } from 'store/actions/auth'
 import { GET_AUTH_STATE } from 'store/selectors/auth'
+import BackgroundImage from 'assets/img/login-bg.jpg'
+import Logo from 'assets/img/logo.png'
 import styles from './styles.module.scss'
 
 type TFormData = {
@@ -49,7 +51,12 @@ const LoginPage = (): React.ReactElement => {
     }, [user, loading, history])
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} style={{ backgroundImage: `url(${BackgroundImage})` }}>
+            <div className={styles.leftPanel}>
+                <h1 className={styles.title}>DEK-G21</h1>
+                <img src={Logo} className={styles.logo} alt="pattern" />
+            </div>
+
             <Card className={styles.card}>
                 <Card.Header>
                     <h1 className="size-3">Iniciar sesión</h1>

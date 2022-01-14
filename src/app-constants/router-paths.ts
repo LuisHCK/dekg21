@@ -1,5 +1,6 @@
 export const ROUTER_PATHS = {
     LOGIN: '/login',
+    LOGOUT: '/logout',
     HOME: {
         ROOT: '/',
         ALT: '/inicio',

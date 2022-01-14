@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PageTitle from 'components/page-title'
 import { Button, ButtonGroup, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,10 +13,12 @@ import {
 } from 'store/actions/inventory.actions'
 import InventoryPartForm from 'components/inventory-part-form'
 import { TPart } from 'types/inventory'
+import InventoryPartDetails from 'components/inventory-part-details'
 
 const InventoryPage = (): React.ReactElement => {
     const dispatch = useDispatch()
     const { parts, showForm, currentPart } = useSelector(SELECT_INVENTORY_STATE)
+    const [showDetails, setShowDetails] = useState(false)
 
     const openEdit = async (part: TPart) => {
         await dispatch(GET_CURRENT_PART({ id: part.id }))
@@ -41,6 +43,19 @@ const InventoryPage = (): React.ReactElement => {
         toggleForm()
     }
 
+    const openDetails = (partId: number) => {
+        dispatch(GET_CURRENT_PART({ id: partId }))
+        setShowDetails(true)
+    }
+
+    const onCloseDetails = () => {
+        setShowDetails(false)
+
+        setTimeout(() => {
+            dispatch(CLEAN_CURRENT_PART())
+        }, 300)
+    }
+
     const renderParts = (): React.ReactNode =>
         parts?.map((part) => (
             <tr key={`part-row-${part.id}`}>
@@ -55,8 +70,10 @@ const InventoryPage = (): React.ReactElement => {
                 <td>{part.stock}</td>
                 <td>
                     <ButtonGroup size="sm">
+                        <Button variant="secondary" onClick={() => openDetails(part.id)}>
+                            Ver
+                        </Button>
                         <Button onClick={() => openEdit(part)}>Editar</Button>
-                        <Button variant="secondary">Detalles</Button>
                     </ButtonGroup>
                 </td>
             </tr>
@@ -101,6 +118,8 @@ const InventoryPage = (): React.ReactElement => {
             </Table>
 
             <InventoryPartForm show={showForm} onClose={toggleForm} onSubmit={handleSave} />
+
+            <InventoryPartDetails show={showDetails} onClose={onCloseDetails} />
         </div>
     )
 }

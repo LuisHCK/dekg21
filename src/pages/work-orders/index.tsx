@@ -63,15 +63,15 @@ const WorkOrdersPage = (): React.ReactElement => {
                     </td>
                     <td>
                         <ButtonGroup>
-                            <Button size="sm" onClick={() => selectCurrentWorkOrder(workOrder)}>
-                                Editar
-                            </Button>
                             <Button
                                 size="sm"
                                 variant="secondary"
                                 onClick={() => handleShowDetails(workOrder.id)}
                             >
-                                Detalles
+                                Ver
+                            </Button>
+                            <Button size="sm" onClick={() => selectCurrentWorkOrder(workOrder)}>
+                                Editar
                             </Button>
                         </ButtonGroup>
                     </td>

@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Button, Col, FormControl, Row } from 'react-bootstrap'
+import { Button, Col, Form, FormControl, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import Select from 'react-select'
-import { GET_ALL_PARTS } from 'store/actions/inventory.actions'
+import CreatableSelect from 'react-select/creatable'
+import { CREATE_PART, GET_ALL_PARTS } from 'store/actions/inventory.actions'
 import { SELECT_INVENTORY_STATE } from 'store/selectors/inventory.selector'
 import { TPart } from 'types/inventory'
 import { TWorkOrderPartUsed } from 'types/work-order'
@@ -21,10 +21,12 @@ type TSelectOption = {
 
 const PartsSelect = (props: TPartsSelectProps): React.ReactElement => {
     const [partsUsed, setPartsUsed] = useState<TWorkOrderPartUsed[]>(props.partsUsed)
-    const { parts } = useSelector(SELECT_INVENTORY_STATE)
+    const [createdPart, setCreatedPart] = useState<{ name: string; id: number }>()
+    const { parts, loading } = useSelector(SELECT_INVENTORY_STATE)
     const dispatch = useDispatch()
 
-    const getPartName = (part?: Partial<TPart>) => `${part?.name} - ${part?.content}${part?.unit}`
+    const getPartName = (part?: Partial<TPart>) =>
+        `${part?.name} - ${part?.content || ''}${part?.unit || ''}`
 
     const handleSelection = (partId: number | string | undefined, selection: TSelectOption) => {
         const partInstance = parts?.find((p) => p.id === Number(selection.value))
@@ -86,10 +88,36 @@ const PartsSelect = (props: TPartsSelectProps): React.ReactElement => {
         [parts],
     )
 
+    const handleCreate = async (name: any, partId?: number) => {
+        dispatch(CREATE_PART({ data: { name, price: 0, stock: 1 } }))
+        dispatch(GET_ALL_PARTS())
+
+        setTimeout(() => {
+            setCreatedPart({ name, id: partId || 0 })
+        }, 500)
+    }
+
+    useEffect(() => {
+        if (createdPart && !loading) {
+            const newPart = parts?.find((part) => part.name === createdPart.name)
+
+            if (newPart) {
+                const updatedParts = partsUsed.map((partUsed) => {
+                    if (partUsed.id === createdPart.id || partUsed._tempId === createdPart.id) {
+                        return { ...partUsed, part: newPart }
+                    }
+                    return partUsed
+                })
+                setPartsUsed(updatedParts)
+            }
+            setCreatedPart(undefined)
+        }
+    }, [createdPart, parts, loading, partsUsed])
+
     const renderPartForm = (partUsed?: TWorkOrderPartUsed) => (
         <Row>
             <Col xs={12} sm={4}>
-                <Select
+                <CreatableSelect
                     options={partsOptions || []}
                     placeholder="Seleccione un repuesto"
                     value={
@@ -98,6 +126,9 @@ const PartsSelect = (props: TPartsSelectProps): React.ReactElement => {
                             : undefined
                     }
                     onChange={(val: any) => handleSelection(partUsed?.id || partUsed?._tempId, val)}
+                    onCreateOption={(value: any) =>
+                        handleCreate(value, partUsed?.id || partUsed?._tempId)
+                    }
                 />
             </Col>
 
@@ -112,6 +143,17 @@ const PartsSelect = (props: TPartsSelectProps): React.ReactElement => {
                         handleQuantityChange(partUsed?.id || partUsed?._tempId, Number(value))
                     }
                 />
+                {!!partUsed?.part.id && (
+                    <Form.Text
+                        className={
+                            Number(partUsed?.part.stock) - Number(partUsed?.quantity) > 0
+                                ? 'text-muted'
+                                : 'text-danger'
+                        }
+                    >
+                        Existencias: {Number(partUsed?.part.stock) - Number(partUsed?.quantity)}
+                    </Form.Text>
+                )}
             </Col>
 
             <Col xs={12} sm={4} className="text-left">

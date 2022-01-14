@@ -61,7 +61,7 @@ export const buildFormset = (
             name: 'partUsed',
             nativeType: 'component',
             label: 'Repuestos utilizados',
-            value: get(workOrder, 'partUsed'),
+            value: get(workOrder, 'partUsed') as any,
             className: 'col-xs-12 col-sm-12',
             options: parts?.map((part) => ({
                 key: part.id,
