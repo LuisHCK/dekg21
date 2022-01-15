@@ -2,4 +2,16 @@
     position: fixed !important;
     width: 100%;
     z-index: 99;
+    padding: 0 32px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 32px;
+    height: 32px;
+    margin-right: 16px;
 }

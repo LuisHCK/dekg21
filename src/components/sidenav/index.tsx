@@ -6,6 +6,7 @@ import { ReactComponent as IconPeople } from 'bootstrap-icons/icons/people.svg'
 import { ReactComponent as IconWrench } from 'bootstrap-icons/icons/wrench.svg'
 import { ReactComponent as IconJournal } from 'bootstrap-icons/icons/journal-check.svg'
 import { ReactComponent as IconList } from 'bootstrap-icons/icons/list-task.svg'
+import { ReactComponent as IconExit } from 'bootstrap-icons/icons/box-arrow-left.svg'
 
 import NavLink from './navlink'
 
@@ -58,6 +59,7 @@ const SideNav = (): React.ReactElement => {
                     />
                 ))}
             </ul>
+            <NavLink to={ROUTER_PATHS.LOGOUT} label="Cerrar sesión" icon={IconExit} />
         </div>
     )
 }

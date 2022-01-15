@@ -17,6 +17,7 @@ import {
 } from 'store/actions/employee.actions'
 import { flattenForm, formIsValid } from 'utils/services'
 import { ROUTER_PATHS } from 'app-constants/router-paths'
+import { toast } from 'react-toastify'
 
 const EmployeeFormPage = (): React.ReactElement => {
     const { id } = useParams<{ id: string | undefined }>()
@@ -49,6 +50,8 @@ const EmployeeFormPage = (): React.ReactElement => {
         } else {
             await dispatch(CREATE_EMPLOYEE({ data }))
         }
+
+        toast.success('Se guardó con éxito', { position: 'top-right' })
 
         history.push(ROUTER_PATHS.EMPLOYEES.ROOT)
     }

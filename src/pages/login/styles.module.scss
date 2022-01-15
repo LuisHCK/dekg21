@@ -8,7 +8,6 @@
 
     padding: 1rem;
 
-    background-image: url('img/taton-moise-EhOCnW4wnuQ-unsplash.jpeg');
     background-size: cover;
     background-position: center;
 }
@@ -16,4 +15,19 @@
 .card {
     width: 480px;
     max-width: 100%;
+}
+
+.leftPanel {
+    width: 40%;
+}
+
+.title {
+    font-size: 5rem;
+    color: #ffffff;
+    text-shadow: 2px 2px 5px rgb(204, 204, 204);
+}
+
+.logo {
+    width: 320px;
+    height: 320px;
 }

@@ -14,6 +14,7 @@ const MaintenanceRegisterFormPage = React.lazy(() => import('pages/maintenance-r
 const MaintenanceRegisterPage = React.lazy(() => import('pages/maintenace-register'))
 const WorkOrdersPage = React.lazy(() => import('pages/work-orders'))
 const InventoryPage = React.lazy(() => import('pages/inventory'))
+const LogoutPage = React.lazy(() => import('pages/logout'))
 
 const APP_ROUTES: AppRoute[] = [
     {
@@ -21,6 +22,11 @@ const APP_ROUTES: AppRoute[] = [
         component: LoginPage,
         exact: true,
         isPublic: true,
+    },
+    {
+        path: ROUTER_PATHS.LOGOUT,
+        component: LogoutPage,
+        exact: true,
     },
     {
         path: [ROUTER_PATHS.HOME.ROOT, ROUTER_PATHS.HOME.ALT],
