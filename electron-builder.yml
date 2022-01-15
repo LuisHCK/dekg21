@@ -1,24 +1,30 @@
-productName: 'Dek-G21'
-
-main: 'electron/main.js'
+productName: 'DEK-G21'
 
 appId: 'app.dek.g21'
 
 files:
-    - "build/**/*"
-    - "electron/main.ts"
-    - "package.json"
+    - 'build/**/*'
+    - 'public/**/*'
+    - '!**/node_modules/*'
 
-asar: false
+directories:
+    buildResources: 'assets'
+
+extraResources:
+- from: "./public/**/*"
+  to: assets
+
+
+asar: true
 
 # Windows configuration
 win:
-  icon: "src/app/assets/images/icon.ico"
-  target:
-    - "zip"
-    - "nsis"
+    icon: "src/public/favicon.ico"
+    target:
+        - 'zip'
+        - 'nsis'
 
 # Config for the windows installer
 nsis:
-  oneClick: true
-  perMachine: true
+    oneClick: true
+    perMachine: true
