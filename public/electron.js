@@ -1,6 +1,6 @@
 const { app, BrowserWindow, screen: electronScreen } = require('electron')
-const isDev = require('electron-is-dev');
-const path = require('path');
+const isDev = require('electron-is-dev')
+const path = require('path')
 
 const createMainWindow = () => {
     let mainWindow = new BrowserWindow({
@@ -9,14 +9,14 @@ const createMainWindow = () => {
         show: false,
         backgroundColor: 'white',
         webPreferences: {
-            nodeIntegration: false,
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            contextIsolation: false,
         },
     })
     const startURL = 'http://localhost:3001'
 
-    mainWindow.loadURL(
-        isDev ? startURL : `file://${path.join(__dirname, '../build/index.html')}`,
-    )
+    mainWindow.loadURL(isDev ? startURL : `file://${path.join(__dirname, '../build/index.html')}`)
 
     mainWindow.once('ready-to-show', () => mainWindow.show())
 

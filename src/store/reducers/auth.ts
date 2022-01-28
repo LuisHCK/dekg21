@@ -1,7 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit'
-import moment from 'moment'
-import Cookies from 'js-cookie'
-import { AUTH_CLEAN_REQUEST_STATUS, AUTH_LOGIN, GET_USER_PROFILE } from 'store/actions/auth'
+import {
+    AUTH_CLEAN_REQUEST_STATUS,
+    AUTH_LOGIN,
+    AUTH_REGISTER,
+    GET_USER_PROFILE,
+} from 'store/actions/auth'
 import { authInitialState } from 'store/states/auth'
 
 export const authReducer = createReducer(authInitialState, (builder) => {
@@ -17,23 +20,46 @@ export const authReducer = createReducer(authInitialState, (builder) => {
     }))
 
     builder.addCase(AUTH_LOGIN.fulfilled, (state, { payload }) => {
-        Cookies.set('authToken', payload.jwt)
-        const tokenExpiration = moment(new Date()).add(7, 'days')
-        Cookies.set('tokenExpiration', tokenExpiration.toISOString())
-
+        localStorage.setItem('currentUser', JSON.stringify(payload))
         return {
             ...state,
-            user: payload.user,
+            user: payload,
             loading: false,
-            tokenExpiresAt: tokenExpiration.toISOString(),
         }
     })
 
-    builder.addCase(AUTH_CLEAN_REQUEST_STATUS, (state) => ({
+    // User registration
+    builder.addCase(AUTH_REGISTER.pending, (state) => ({
         ...state,
-        loading: false,
+        loading: true,
         error: false,
     }))
+
+    builder.addCase(AUTH_REGISTER.rejected, (state) => ({
+        ...state,
+        loading: false,
+        error: true,
+    }))
+
+    builder.addCase(AUTH_REGISTER.fulfilled, (state, { payload }) => {
+        localStorage.setItem('currentUser', JSON.stringify(payload))
+        return {
+            ...state,
+            loading: false,
+            error: false,
+            user: payload,
+        }
+    })
+
+    builder.addCase(AUTH_CLEAN_REQUEST_STATUS, (state) => {
+        localStorage.removeItem('currentUser')
+        return {
+            ...state,
+            loading: false,
+            error: false,
+            user: undefined,
+        }
+    })
 
     // Load user profile
     builder.addCase(GET_USER_PROFILE.pending, (state) => ({
@@ -49,7 +75,7 @@ export const authReducer = createReducer(authInitialState, (builder) => {
     }))
 
     builder.addCase(GET_USER_PROFILE.fulfilled, (state, { payload }) => {
-        Cookies.set('user', JSON.stringify(payload))
+        localStorage.setItem('currentUser', JSON.stringify(payload))
         return { ...state, loading: false, error: false, user: payload }
     })
 })

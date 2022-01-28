@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import Select from 'react-select'
 import { Alert, Col, Form, Row } from 'react-bootstrap'
 import { TFormField, TFormSet } from 'types/machinery'
-import { assetUpload } from 'utils/services'
+import { storeFile } from 'utils/storage'
 
 type HTMLInputElements = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
 
@@ -37,9 +37,11 @@ const ContentForm = ({ form, onChange, hideTitle, renderOnly }: TProps): React.R
         const fileList = currentTarget.files
 
         if (fileList && fileList.length) {
-            const filesResponse = await assetUpload(fileList[0])
-            if (filesResponse?.length) {
-                onChange({ ...form, fields: insertFields(currentTarget.name, filesResponse[0].id) })
+            const file = fileList[0]
+            const filePath = await storeFile({ file, name: file.name })
+
+            if (filePath) {
+                onChange({ ...form, fields: insertFields(currentTarget.name, filePath) })
             }
         }
     }

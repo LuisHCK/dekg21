@@ -3,9 +3,10 @@ import moment from 'moment'
 import { Button, Card, ListGroup, ListGroupItem, Modal } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { SELECT_WORK_ORDER_STATE } from 'store/selectors/work-order.selectors'
-import { getAssetPath } from 'utils/services'
 import styles from './styles.module.scss'
 import Masonry from 'react-masonry-css'
+import { readFileAsB64 } from 'utils/storage'
+import { isObject } from 'lodash'
 
 type TWorkDetailsProps = {
     show?: boolean
@@ -70,7 +71,11 @@ const WorkOrderDetails = ({ show, onClose }: TWorkDetailsProps): React.ReactElem
                                 <ListGroupItem>
                                     <img
                                         className="img-thumbnail"
-                                        src={getAssetPath(currentOrder?.machine.photo?.url)}
+                                        src={
+                                            isObject(currentOrder?.machine.photo)
+                                                ? readFileAsB64(currentOrder?.machine?.photo.path)
+                                                : ''
+                                        }
                                         alt="machine"
                                     />
                                 </ListGroupItem>

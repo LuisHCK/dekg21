@@ -1,9 +1,10 @@
-import Cookies from 'js-cookie'
-import { IAuthState } from 'types/user'
+import { IAuthState, IUser } from 'types/user'
+
+const currentUser = localStorage.getItem('currentUser')
 
 export const authInitialState: IAuthState = {
     loading: false,
     error: false,
-    user: undefined,
-    tokenExpiresAt: Cookies.get('tokenExpiration'),
+    tokenExpiresAt: undefined,
+    user: currentUser? JSON.parse(currentUser) as IUser : undefined
 }

@@ -1,4 +1,9 @@
 module.exports = {
+    webpack: {
+        configure: {
+            target: 'electron-renderer',
+        },
+    },
     style: {
         css: {
             loaderOptions: (opts) => {

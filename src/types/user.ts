@@ -1,4 +1,8 @@
-import { ICompany } from './config'
+export type TFormData = {
+    identifier: string
+    password: string
+    rememberMe: boolean
+}
 
 export interface IUserAuth {
     identifier: string
@@ -23,6 +27,10 @@ export interface IUser {
     provider: string
     role?: IRole
     description: string
+}
+
+export interface IAuthUser extends IUser {
+    passwordDigest: string
 }
 
 export interface IPostUser extends IUser {

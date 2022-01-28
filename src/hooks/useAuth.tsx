@@ -1,20 +1,9 @@
-import { useEffect, useState } from 'react'
-import moment from 'moment'
-import { useSelector } from 'react-redux'
-import { GET_AUTH_STATE } from 'store/selectors/auth'
+const userString = localStorage.getItem('currentUser')
 
 const useAuth = () => {
-    const { tokenExpiresAt } = useSelector(GET_AUTH_STATE)
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
-        moment(tokenExpiresAt) > moment(new Date()),
-    )
+    const currentUser = userString ? JSON.parse(userString) : undefined
 
-    useEffect(() => {
-        const tokenValid = moment(tokenExpiresAt) > moment(new Date())
-        setIsAuthenticated(tokenValid)
-    }, [tokenExpiresAt])
-
-    return isAuthenticated
+    return !!currentUser?.id
 }
 
 export default useAuth

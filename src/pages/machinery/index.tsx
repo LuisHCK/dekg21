@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react'
 import PageTitle from 'components/page-title'
 import { Link } from 'react-router-dom'
-import { Card, Col, Row, Button, Spinner } from 'react-bootstrap'
+import { Card, Col, Row, Button, Spinner, Alert } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { GET_MACHINERY } from 'store/actions/machine.actions'
 import { SELECT_MACHINERY_STATE } from 'store/selectors/machinery.selector'
-import { getAssetPath, getRouteWithParams } from 'utils/services'
+import { getRouteWithParams } from 'utils/services'
 import ClampLines from 'react-clamp-lines'
 import { ROUTER_PATHS } from 'app-constants/router-paths'
 import styles from './styles.module.scss'
+import { readFileAsB64 } from 'utils/storage'
+import { isObject } from 'lodash'
 
 const Machinery = (): React.ReactElement => {
     const dispatch = useDispatch()
@@ -49,13 +51,17 @@ const Machinery = (): React.ReactElement => {
                         xl={3}
                         className="d-flex"
                     >
-                        <Card className="mb-4">
+                        <Card className="mb-4 w-100">
                             {typeof machine.photo === 'object' && (
                                 <Card.Img
                                     className={styles.card_image}
                                     variant="top"
-                                    src={getAssetPath(machine.photo?.url)}
-                                    alt={machine.photo.name}
+                                    src={
+                                        isObject(machine?.photo)
+                                            ? readFileAsB64(machine?.photo.path)
+                                            : ''
+                                    }
+                                    alt={machine.name}
                                 />
                             )}
                             <Card.Body className="h-100">
@@ -84,6 +90,8 @@ const Machinery = (): React.ReactElement => {
                         </Card>
                     </Col>
                 ))}
+
+                {!machines.length && <Alert variant="warning">No hay maquinas registradas</Alert>}
             </Row>
         </div>
     )

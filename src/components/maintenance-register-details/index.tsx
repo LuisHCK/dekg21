@@ -1,9 +1,10 @@
+import { isObject } from 'lodash'
 import moment from 'moment'
 import React, { useMemo } from 'react'
 import { Button, Col, ListGroup, Modal, Row, Table } from 'react-bootstrap'
 import { TMachinery } from 'types/machinery'
 import { TMaintenanceRegister } from 'types/maintenance-register'
-import { getAssetPath } from 'utils/services'
+import { readFileAsB64 } from 'utils/storage'
 import styles from './styles.module.scss'
 
 type TProps = {
@@ -54,9 +55,7 @@ const MaintenanceRegisterDetails = ({ show, onClose, register }: TProps): React.
                     <Col xs={12} sm={6}>
                         <img
                             className="img-fluid"
-                            src={getAssetPath(
-                                typeof machine?.photo === 'object' ? machine.photo.url : '',
-                            )}
+                            src={isObject(machine?.photo) ?readFileAsB64(machine?.photo.path): ''}
                             alt={machine?.name}
                         />
                     </Col>

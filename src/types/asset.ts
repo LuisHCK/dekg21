@@ -8,6 +8,10 @@ export interface IAsset {
     user: Partial<IUser>
 }
 
+export type TNodeAsset = {
+    path: string
+}
+
 export type TAsset = {
     id: number
     name: string

@@ -62,14 +62,17 @@ const MachineryFormPage = (): React.ReactElement => {
                 ? UPDATE_MACHINERY_FORM({ ...postBody, id: Number(id) })
                 : SUBMIT_MACHINERY_FORM(postBody),
         )
-
-        if (id) {
-            history.push(
-                getRouteWithParams(ROUTER_PATHS.MACHINERY.SHOW, [
-                    { key: 'id', value: parseInt(id) },
-                ]),
-            )
-        }
+        setTimeout(() => {
+            if (currentMachine?.id) {
+                history.push(
+                    getRouteWithParams(ROUTER_PATHS.MACHINERY.SHOW, [
+                        { key: 'id', value: currentMachine.id },
+                    ]),
+                )
+            } else {
+                history.push(ROUTER_PATHS.MACHINERY.ROOT)
+            }
+        }, 300)
     }
 
     useEffect(() => {

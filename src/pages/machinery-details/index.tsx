@@ -7,12 +7,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { SET_CURRENT_MACHINE } from 'store/actions/machine.actions'
 import { SELECT_CURRENT_MACHINE } from 'store/selectors/machinery.selector'
 import { ROUTER_PATHS } from 'app-constants/router-paths'
-import { getAssetPath, getRouteWithParams } from 'utils/services'
+import { getRouteWithParams } from 'utils/services'
 import machineForm from 'pages/machine-form/slides'
-import { get } from 'lodash'
+import { get, isObject } from 'lodash'
 import { TFormField } from 'types/machinery'
-import { TAsset } from 'types/asset'
+import { TNodeAsset } from 'types/asset'
 import './styles.scss'
+import { readFileAsB64 } from 'utils/storage'
 
 const MachineryDetailsPage = (): React.ReactElement => {
     const { id } = useParams<{ id: string }>()
@@ -24,13 +25,16 @@ const MachineryDetailsPage = (): React.ReactElement => {
     }, [dispatch, id])
 
     const renderField = (formfield: TFormField) => {
-        const fieldData: TAsset | string | number | undefined = get(currentMachine, formfield.name)
+        const fieldData: TNodeAsset | string | number | undefined = get(
+            currentMachine,
+            formfield.name,
+        )
 
-        if (fieldData && typeof fieldData === 'object') {
+        if (fieldData && isObject(fieldData)) {
             return (
                 <img
                     className="w-100 h-auto"
-                    src={getAssetPath(fieldData?.url)}
+                    src={readFileAsB64(fieldData.path)}
                     alt={currentMachine?.name}
                 />
             )
