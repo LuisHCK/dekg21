@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Button, ButtonGroup, Modal, Spinner, Table } from 'react-bootstrap'
+import { Alert, Button, ButtonGroup, Modal, Spinner, Table } from 'react-bootstrap'
 import { ReactComponent as IconInbox } from 'bootstrap-icons/icons/inbox.svg'
+import { toast } from 'react-toastify'
 import PageTitle from 'components/page-title'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -37,12 +38,13 @@ const WorkOrdersPage = (): React.ReactElement => {
         } else {
             await dispatch(CREATE_WORK_ORDER({ data }))
         }
-
+        toast.success('Se guardó con éxito', { position: 'top-right' })
         setShowForm(false)
     }
 
     const handleShowDetails = (id: number) => {
         dispatch(GET_CURRENT_WORK_ORDER({ id }))
+        toggleDetails()
     }
 
     useEffect(() => {
@@ -55,7 +57,7 @@ const WorkOrdersPage = (): React.ReactElement => {
             return workOrders?.map((workOrder) => (
                 <tr key={`work-order-row-${workOrder.id}`}>
                     <td>{workOrder.id}</td>
-                    <td>{workOrder.machine.name}</td>
+                    <td>{workOrder.machine?.name}</td>
                     <td>{moment(workOrder.date).format('DD/MM/YYYY')}</td>
                     <td>{workOrder.area}</td>
                     <td>
@@ -81,8 +83,10 @@ const WorkOrdersPage = (): React.ReactElement => {
 
         return (
             <tr>
-                <td colSpan={6} className="text-center">
-                    No hay registros <IconInbox />
+                <td colSpan={6}>
+                    <Alert variant="warning" className="text-center">
+                        <IconInbox /> No hay registros
+                    </Alert>
                 </td>
             </tr>
         )

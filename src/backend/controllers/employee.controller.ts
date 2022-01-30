@@ -44,8 +44,6 @@ export const updateEmploye = async (id?: number, data?: Partial<TEmployee>): Pro
 
     const employee = await EmployeeTable.get(id || 0)
 
-    console.log('Employee controller: ', employee, id)
-
     if (employee) return employee
 
     throw Error('No se pudo guardar el empleado')

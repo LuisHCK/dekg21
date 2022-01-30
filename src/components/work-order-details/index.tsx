@@ -1,12 +1,13 @@
 import React from 'react'
 import moment from 'moment'
-import { Button, Card, ListGroup, ListGroupItem, Modal } from 'react-bootstrap'
+import { Alert, Button, Card, ListGroup, ListGroupItem, Modal } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { SELECT_WORK_ORDER_STATE } from 'store/selectors/work-order.selectors'
 import styles from './styles.module.scss'
 import Masonry from 'react-masonry-css'
 import { readFileAsB64 } from 'utils/storage'
 import { isObject } from 'lodash'
+import PartsUsed from './parts-used'
 
 type TWorkDetailsProps = {
     show?: boolean
@@ -15,6 +16,12 @@ type TWorkDetailsProps = {
 
 const WorkOrderDetails = ({ show, onClose }: TWorkDetailsProps): React.ReactElement => {
     const { currentOrder } = useSelector(SELECT_WORK_ORDER_STATE)
+
+    const partsTotal =
+        currentOrder?.partUsed?.reduce((prev, current) => {
+            const subTotal = Number(current.part?.price) * Number(current.quantity)
+            return subTotal + prev
+        }, 0) || 0
 
     return (
         <Modal show={show} onHide={onClose} size="xl">
@@ -107,8 +114,16 @@ const WorkOrderDetails = ({ show, onClose }: TWorkDetailsProps): React.ReactElem
                         <Card.Body>
                             <ListGroup variant="flush">
                                 <ListGroupItem>
-                                    <b>Costo total: </b>
-                                    {currentOrder?.cost}
+                                    <b>Repuestos: </b>
+                                    C${partsTotal}
+                                </ListGroupItem>
+                                <ListGroupItem>
+                                    <b>Costo Adicional: </b>
+                                    C${currentOrder?.cost}
+                                </ListGroupItem>
+                                <ListGroupItem>
+                                    <b>Costo TOTAL: </b>
+                                    C${Number(currentOrder?.cost) + partsTotal}
                                 </ListGroupItem>
                             </ListGroup>
                         </Card.Body>
@@ -118,7 +133,7 @@ const WorkOrderDetails = ({ show, onClose }: TWorkDetailsProps): React.ReactElem
                         <Card.Header className="app-card-header">Repuestos utilizados</Card.Header>
 
                         <Card.Body>
-                            <p>{currentOrder?.partsUsed}</p>
+                            <PartsUsed partsUsed={currentOrder?.partUsed} total={partsTotal} />
                         </Card.Body>
                     </Card>
 
@@ -126,7 +141,11 @@ const WorkOrderDetails = ({ show, onClose }: TWorkDetailsProps): React.ReactElem
                         <Card.Header className="app-card-header">Observaciones</Card.Header>
 
                         <Card.Body>
-                            <p className={styles.paragraph}>{currentOrder?.observations}</p>
+                            {currentOrder?.observations ? (
+                                <p className={styles.paragraph}>{currentOrder.observations}</p>
+                            ) : (
+                                <Alert variant="info">No hay Observaciones</Alert>
+                            )}
                         </Card.Body>
                     </Card>
                 </Masonry>

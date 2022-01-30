@@ -14,8 +14,8 @@ const AppLayout = ({ children }: TProps): React.ReactElement => {
             <AppNavbar />
             <div className="d-flex">
                 <SideNav />
-                <main className={classnames('container', 'bg-light', styles.main_content)}>
-                    {children}
+                <main className={classnames('w-100', 'bg-light', styles.main_content)}>
+                    <div className="container">{children}</div>
                 </main>
             </div>
         </div>

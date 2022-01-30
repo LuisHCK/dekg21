@@ -1,43 +1,38 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit'
-import API_ROUTES from 'app-constants/api-routes'
-import HTTPClient from 'utils/http-client'
+import { createPart, listParts, showPart, updatePart } from 'backend/controllers/part.controller'
 import { TPart } from 'types/inventory'
-import { AxiosResponse } from 'axios'
 
 type TParams = {
     id?: number
-    data?: Partial<TPart>
+    data: Partial<TPart>
 }
 
 export const GET_ALL_PARTS = createAsyncThunk('INVENTORY/GET_ALL_PRODUCTS', async () => {
-    const response = await HTTPClient.get<TPart[]>(API_ROUTES.PARTS.ROOT)
-    return response.data
+    const response = await listParts()
+    return response
 })
 
 export const GET_CURRENT_PART = createAsyncThunk(
     'INVENTORY/GET_CURRENT_PART',
-    async ({ id }: TParams) => {
-        const response = await HTTPClient.get<TPart>(API_ROUTES.PARTS.BY_ID(id || 0))
-        return response.data
+    async ({ id }: Partial<TParams>) => {
+        const response = await showPart(id || 0)
+        return response
     },
 )
 
-export const CREATE_PART = createAsyncThunk('INVENTORY/CREATE_PART', async ({ data }: TParams) => {
-    const response = await HTTPClient.post<Partial<TPart>, AxiosResponse<TPart>>(
-        API_ROUTES.PARTS.ROOT,
-        data,
-    )
-    return response.data
-})
+export const CREATE_PART = createAsyncThunk(
+    'INVENTORY/CREATE_PART',
+    async ({ data }: Partial<TParams>) => {
+        const response = await createPart(data || {})
+        return response
+    },
+)
 
 export const UPDATE_PART = createAsyncThunk(
-    'INVENTORY/CREATE_PART',
-    async ({ id, data }: TParams) => {
-        const response = await HTTPClient.put<Partial<TPart>, AxiosResponse<TPart>>(
-            API_ROUTES.PARTS.BY_ID(id || 0),
-            data,
-        )
-        return response.data
+    'INVENTORY/UPDATE_PART',
+    async ({ id, data }: Partial<TParams>) => {
+        const response = await updatePart(id || 0, data || {})
+        return response
     },
 )
 

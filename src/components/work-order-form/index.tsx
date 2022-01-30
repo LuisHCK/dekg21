@@ -1,8 +1,9 @@
-import ContentForm from 'components/content-form'
-import PartsSelect from 'components/parts-select'
 import React, { useEffect, useMemo, useState } from 'react'
+import ContentForm from 'components/content-form'
 import { Button, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+
 import { GET_ALL_EMPLOYEES } from 'store/actions/employee.actions'
 import { GET_ALL_PARTS } from 'store/actions/inventory.actions'
 import { GET_MACHINERY } from 'store/actions/machine.actions'
@@ -10,10 +11,12 @@ import { SELECT_EMPLOYEE_STATE } from 'store/selectors/employee.selector'
 import { SELECT_INVENTORY_STATE } from 'store/selectors/inventory.selector'
 import { SELECT_MACHINERY_STATE } from 'store/selectors/machinery.selector'
 import { SELECT_WORK_ORDER_STATE } from 'store/selectors/work-order.selectors'
+
+import PartsSelect from 'components/parts-select'
 import { TFormSet } from 'types/machinery'
-import { TWorkOrderPartUsed, TWorkOrderPostBody } from 'types/work-order'
-import { flattenForm } from 'utils/services'
+import { flattenForm, formIsValid } from 'utils/services'
 import { buildFormset } from './formset'
+import { TWorkOrderPartUsed, TWorkOrderPostBody } from 'types/work-order'
 
 type TWorkOrderProps = {
     onSave?: (formset: TWorkOrderPostBody) => void
@@ -33,6 +36,11 @@ const WorkOrderForm = ({ onSave, onCancel }: TWorkOrderProps): React.ReactElemen
     }
 
     const handleSave = () => {
+        if (formset && !formIsValid([formset])) {
+            toast.error('Por favor revise el formulario')
+            return
+        }
+
         if (formset) {
             const data: any = flattenForm([formset])
             onSave?.(data)
@@ -62,7 +70,7 @@ const WorkOrderForm = ({ onSave, onCancel }: TWorkOrderProps): React.ReactElemen
     }, [formset])
 
     useEffect(() => {
-        if (!formset && employees && machines && parts) {
+        if (!formset && employees.length && machines.length && parts?.length) {
             const newFormset = buildFormset(machines, employees, parts, currentOrder)
             setFormset(newFormset)
         }

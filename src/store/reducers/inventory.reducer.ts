@@ -5,6 +5,7 @@ import {
     GET_ALL_PARTS,
     GET_CURRENT_PART,
     TOGGLE_PART_FORM,
+    UPDATE_PART,
 } from 'store/actions/inventory.actions'
 import { inventoryState } from 'store/states/inventory.state'
 
@@ -42,6 +43,19 @@ const inventoryReducer = createReducer(inventoryState, (builder) => {
         loading: false,
         error: false,
         currentPart: payload,
+        parts: state.parts ? [...state.parts, payload] : [payload],
+    }))
+
+    // Update part
+    builder.addCase(UPDATE_PART.fulfilled, (state, { payload }) => ({
+        ...state,
+        loading: false,
+        error: false,
+        currentPart: payload,
+        parts: state.parts?.map((part) => {
+            if (part.id === payload.id) return payload
+            return part
+        }),
     }))
 
     builder.addCase(TOGGLE_PART_FORM, (state) => ({

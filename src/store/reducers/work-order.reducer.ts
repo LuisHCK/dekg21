@@ -31,7 +31,6 @@ const workOrderReducer = createReducer(workOrderState, (builder) => {
     }))
 
     // UPDATE ORDER
-
     builder.addCase(UPDATE_WORK_ORDER.pending, (state) => ({
         ...state,
         loading: true,
@@ -49,6 +48,10 @@ const workOrderReducer = createReducer(workOrderState, (builder) => {
         loading: false,
         error: false,
         currentOrder: payload,
+        workOrders: state.workOrders?.map((order) => {
+            if (order.id === payload.id) return payload
+            return order
+        }),
     }))
 
     // CREATE WORK ORDER
@@ -69,6 +72,7 @@ const workOrderReducer = createReducer(workOrderState, (builder) => {
         loading: false,
         error: false,
         currentOrder: payload,
+        workOrders: state.workOrders ? [...state.workOrders, payload] : [payload],
     }))
 
     // CLEAN CURRENT WORK ORDER
