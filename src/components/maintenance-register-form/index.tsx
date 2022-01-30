@@ -1,16 +1,12 @@
-import { ROUTER_PATHS } from 'app-constants/router-paths'
-import ContentForm from 'components/content-form'
-import PageTitle from 'components/page-title'
-import { get } from 'lodash'
 import React, { useEffect, useState } from 'react'
-import { Button, ButtonGroup } from 'react-bootstrap'
+import { get } from 'lodash'
+import { Button, Modal } from 'react-bootstrap'
+
+import ContentForm from 'components/content-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useHistory, useParams } from 'react-router-dom'
 import { GET_MACHINERY } from 'store/actions/machine.actions'
 import {
-    CLEAN_CURRENT_MAINTENANCE_REGISTER,
     CREATE_MAINTENANCE_REGISTER,
-    GET_CURRENT_MAINTENANCE_REGISTER,
     UPDATE_MAINTENANCE_REGISTER,
 } from 'store/actions/maintenance-register.actions'
 import { SELECT_MACHINERY_STATE } from 'store/selectors/machinery.selector'
@@ -18,15 +14,19 @@ import { SELECT_CURRENT_MAINTENANCE_REGISTER } from 'store/selectors/maintenance
 import { TFormSet, TMachineryForm } from 'types/machinery'
 import { flattenForm, formIsValid } from 'utils/services'
 import formset from './formset'
+import { toast } from 'react-toastify'
 
-const MaintenanceRegisterForm = (): React.ReactElement => {
-    const { id } = useParams<{ id: string }>()
+interface IProps {
+    show: boolean
+    onClose: () => void
+}
+
+const MaintenanceRegisterForm = ({ show, onClose }: IProps): React.ReactElement => {
     const [registerForm, setRegisterForm] = useState<TMachineryForm>(formset)
     const { machines } = useSelector(SELECT_MACHINERY_STATE)
     const currentRegister = useSelector(SELECT_CURRENT_MAINTENANCE_REGISTER)
     const [formLoaded, setFormLoaded] = useState<boolean>(false)
     const [machinesLoaded, setMachinesLoaded] = useState<boolean>(false)
-    const history = useHistory()
     const dispatch = useDispatch()
 
     const handleChange = (data: TFormSet) => {
@@ -34,32 +34,29 @@ const MaintenanceRegisterForm = (): React.ReactElement => {
     }
 
     const saveForm = async () => {
-        if (!formIsValid(registerForm.formsets)) {
+        if (!registerForm || !formIsValid(registerForm?.formsets)) {
+            toast.error('Por favor revise el formulario', { position: 'top-right' })
             return
         }
 
         const formData = flattenForm(registerForm.formsets)
 
-        if (id) {
-            await dispatch(UPDATE_MAINTENANCE_REGISTER({ id, data: formData }))
+        if (currentRegister?.id) {
+            await dispatch(UPDATE_MAINTENANCE_REGISTER({ id: currentRegister.id, data: formData }))
         } else {
             await dispatch(CREATE_MAINTENANCE_REGISTER({ data: formData }))
         }
-        history.push(ROUTER_PATHS.MAINTENANCE_REGISTER.ROOT)
+
+        toast.success('Se guardó con éxito', { position: 'top-right' })
+        onClose()
     }
 
     useEffect(() => {
         dispatch(GET_MACHINERY())
-
-        if (id) dispatch(GET_CURRENT_MAINTENANCE_REGISTER({ id }))
-
-        return () => {
-            dispatch(CLEAN_CURRENT_MAINTENANCE_REGISTER())
-        }
-    }, [dispatch, id])
+    }, [dispatch])
 
     useEffect(() => {
-        if (registerForm && machines && !machinesLoaded) {
+        if (show && registerForm && machines && !machinesLoaded) {
             const machinesList = machines.map((machine) => ({
                 key: machine.id,
                 label: machine.name,
@@ -80,7 +77,7 @@ const MaintenanceRegisterForm = (): React.ReactElement => {
             setRegisterForm({ formsets: updatedFormset })
             setMachinesLoaded(true)
         }
-    }, [machines, registerForm, machinesLoaded])
+    }, [show, machines, registerForm, machinesLoaded])
 
     useEffect(() => {
         if (!formLoaded) {
@@ -105,29 +102,25 @@ const MaintenanceRegisterForm = (): React.ReactElement => {
     }, [dispatch, registerForm, machines, formLoaded, currentRegister])
 
     return (
-        <div>
-            <PageTitle title={`${id ? 'Editar' : 'Crear'} registro de mantenimiento`}>
-                <ButtonGroup>
-                    <Button
-                        variant="warning"
-                        as={Link as any}
-                        to={ROUTER_PATHS.MAINTENANCE_REGISTER.ROOT}
-                    >
-                        Cancelar
-                    </Button>
-                    <Button
-                        as={Link as any}
-                        to={ROUTER_PATHS.MAINTENANCE_REGISTER.ADD}
-                        variant="primary"
-                        onClick={saveForm}
-                    >
-                        Guardar
-                    </Button>
-                </ButtonGroup>
-            </PageTitle>
+        <Modal show={show} onHide={onClose} backdrop="static" size="lg">
+            <Modal.Header closeButton>
+                <Modal.Title>
+                    {currentRegister?.id ? 'Editar' : 'Crear'} Registro de Mantenimiento
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <ContentForm form={registerForm.formsets[0]} onChange={handleChange} hideTitle />
+            </Modal.Body>
 
-            <ContentForm form={registerForm.formsets[0]} onChange={handleChange} hideTitle />
-        </div>
+            <Modal.Footer>
+                <Button variant="primary" onClick={saveForm}>
+                    Guardar
+                </Button>
+                <Button variant="secondary" onClick={onClose}>
+                    Cancelar
+                </Button>
+            </Modal.Footer>
+        </Modal>
     )
 }
 

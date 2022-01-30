@@ -1,50 +1,43 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit'
-import API_ROUTES from 'app-constants/api-routes'
-import HTTPClient from 'utils/http-client'
-import { AxiosResponse } from 'axios'
-import { TMaintenanceRegister, TMaintenanceRegisterPayload } from 'types/maintenance-register'
+import { TMaintenanceRegisterPayload } from 'types/maintenance-register'
+import {
+    createMaintenanceRegister,
+    listMaintenanceRegisters,
+    showMaintenanceRegister,
+    updateMaintenanceRegister,
+} from 'backend/controllers/maintenance-register.controller'
 
 export const GET_MAINTENANCE_REGISTERS = createAsyncThunk(
     'MAINTENANCE-REGISTER/GET_MAINTENANCE_REGISTERS',
     async () => {
-        const response = await HTTPClient.get<TMaintenanceRegister[]>(
-            API_ROUTES.MAINTENANCE_REGISTER.ROOT,
-        )
-        return response.data
+        const response = await listMaintenanceRegisters()
+        return response
     },
 )
 
 export const GET_CURRENT_MAINTENANCE_REGISTER = createAsyncThunk(
     'MAINTENANCE-REGISTER/GET_CURRENT_MAINTENANCE_REGISTER',
-    async ({ id }: TMaintenanceRegisterPayload) => {
-        const response = await HTTPClient.get<TMaintenanceRegister>(
-            API_ROUTES.MAINTENANCE_REGISTER.BY_ID(id),
-        )
-        return response.data
+    async ({ id }: Partial<TMaintenanceRegisterPayload>) => {
+        const response = await showMaintenanceRegister(id || 0)
+        return response
     },
 )
 
 export const CREATE_MAINTENANCE_REGISTER = createAsyncThunk(
     'MAINTENANCE-REGISTER/CREATE_MAINTENANCE_REGISTER',
     async ({ data }: Partial<TMaintenanceRegisterPayload>) => {
-        const response = await HTTPClient.post<
-            Partial<TMaintenanceRegister>,
-            AxiosResponse<TMaintenanceRegister>
-        >(API_ROUTES.MAINTENANCE_REGISTER.ROOT, data)
+        const response = await createMaintenanceRegister(data || {})
 
-        return response.data
+        return response
     },
 )
 
 export const UPDATE_MAINTENANCE_REGISTER = createAsyncThunk(
     'MAINTENANCE-REGISTER/UPDATE_MAINTENANCE_REGISTER',
     async ({ id, data }: TMaintenanceRegisterPayload) => {
-        const response = await HTTPClient.put<
-            Partial<TMaintenanceRegister>,
-            AxiosResponse<TMaintenanceRegister>
-        >(API_ROUTES.MAINTENANCE_REGISTER.BY_ID(id), data)
+        const response = await updateMaintenanceRegister(id, data)
 
-        return response.data
+        return response
     },
 )
 

@@ -12,10 +12,10 @@ export const ROUTER_PATHS = {
         SHOW: '/maquinaria/detalles/:id',
     },
     EMPLOYEES: {
-        ROOT: '/empleados',
-        ADD: '/empleados/crear',
-        EDIT: '/empleados/editar/:id',
-        SHOW: '/empleados/detalles/:id',
+        ROOT: '/colaboradores',
+        ADD: '/colaboradores/crear',
+        EDIT: '/colaboradores/editar/:id',
+        SHOW: '/colaboradores/detalles/:id',
     },
     MAINTENANCE_REGISTER: {
         ROOT: '/registro-de-mantenimiento',

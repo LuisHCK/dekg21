@@ -1,16 +1,20 @@
-import { ROUTER_PATHS } from 'app-constants/router-paths'
+import React, { useEffect, useState } from 'react'
 import PageTitle from 'components/page-title'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
-import { Button, ButtonGroup, Table } from 'react-bootstrap'
+import { isObject } from 'lodash'
+import { Alert, Button, ButtonGroup, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { GET_MAINTENANCE_REGISTERS } from 'store/actions/maintenance-register.actions'
+
+import {
+    CLEAN_CURRENT_MAINTENANCE_REGISTER,
+    GET_CURRENT_MAINTENANCE_REGISTER,
+    GET_MAINTENANCE_REGISTERS,
+} from 'store/actions/maintenance-register.actions'
 import { SELECT_MAINTENANCE_STATE } from 'store/selectors/maintenance-register.selector'
 import { TTableColumn } from 'types/table'
 import { TMaintenanceRegister } from 'types/maintenance-register'
-import { getRouteWithParams } from 'utils/services'
 import MaintenanceRegisterDetails from 'components/maintenance-register-details'
+import MaintenanceRegisterForm from 'components/maintenance-register-form'
 
 const MainteanceRegisterPage = (): React.ReactElement => {
     const { registers } = useSelector(SELECT_MAINTENANCE_STATE)
@@ -18,6 +22,7 @@ const MainteanceRegisterPage = (): React.ReactElement => {
     const [selectedRegister, setSelectedRegister] = useState<TMaintenanceRegister | undefined>(
         undefined,
     )
+    const [showForm, setShowForm] = useState<boolean>(false)
     const dispatch = useDispatch()
 
     const columns: TTableColumn<TMaintenanceRegister>[] = [
@@ -43,13 +48,7 @@ const MainteanceRegisterPage = (): React.ReactElement => {
                     <Button variant="primary" onClick={() => showRegisterDetails(register)}>
                         Ver
                     </Button>
-                    <Button
-                        as={Link as any}
-                        to={getRouteWithParams(ROUTER_PATHS.MAINTENANCE_REGISTER.EDIT, [
-                            { key: 'id', value: register.id },
-                        ])}
-                        variant="secondary"
-                    >
+                    <Button onClick={() => openEditForm(register.id)} variant="secondary">
                         Editar
                     </Button>
                 </ButtonGroup>
@@ -67,7 +66,7 @@ const MainteanceRegisterPage = (): React.ReactElement => {
             return column.render(register)
         }
 
-        if (typeof content !== 'object') {
+        if (!isObject(content)) {
             return content
         }
 
@@ -86,6 +85,21 @@ const MainteanceRegisterPage = (): React.ReactElement => {
         }, 600)
     }
 
+    const openCreateForm = () => {
+        dispatch(CLEAN_CURRENT_MAINTENANCE_REGISTER())
+
+        setTimeout(() => {
+            setShowForm(true)
+        }, 300)
+    }
+
+    const openEditForm = (id: number) => {
+        dispatch(GET_CURRENT_MAINTENANCE_REGISTER({ id }))
+        setTimeout(() => {
+            setShowForm(true)
+        }, 100)
+    }
+
     useEffect(() => {
         dispatch(GET_MAINTENANCE_REGISTERS())
     }, [dispatch])
@@ -93,11 +107,7 @@ const MainteanceRegisterPage = (): React.ReactElement => {
     return (
         <div>
             <PageTitle title="Registro de mantenimiento">
-                <Button
-                    as={Link as any}
-                    to={ROUTER_PATHS.MAINTENANCE_REGISTER.ADD}
-                    variant="primary"
-                >
+                <Button onClick={openCreateForm} variant="primary">
                     Nuevo registro
                 </Button>
             </PageTitle>
@@ -121,6 +131,13 @@ const MainteanceRegisterPage = (): React.ReactElement => {
                             ))}
                         </tr>
                     ))}
+                    {!registers.length && (
+                        <tr>
+                            <td colSpan={6}>
+                                <Alert variant="warning">No hay mantenimientos registrados</Alert>
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </Table>
 
@@ -129,6 +146,8 @@ const MainteanceRegisterPage = (): React.ReactElement => {
                 onClose={closeRegisterDetails}
                 register={selectedRegister}
             />
+
+            <MaintenanceRegisterForm show={showForm} onClose={() => setShowForm(false)} />
         </div>
     )
 }

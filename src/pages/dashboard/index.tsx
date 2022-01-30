@@ -12,7 +12,7 @@ const DasboardPage = (): React.ReactElement => {
                 <Col xs={12} md={6} lg={4}>
                     <Card className="text-center">
                         <Card.Body>
-                            <Card.Title>Empleados registrados</Card.Title>
+                            <Card.Title>Colaboradores registrados</Card.Title>
                             <h1>8</h1>
                             <Button // @ts-ignore
                                 as={Link}

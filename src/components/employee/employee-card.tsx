@@ -1,26 +1,26 @@
 import React from 'react'
 import { Card, Col, Row, Image, Badge, Button } from 'react-bootstrap'
 import { TEmployee } from 'types/employee'
-import { getAssetPath, getRouteWithParams } from 'utils/services'
 import { ReactComponent as IconTelephone } from 'bootstrap-icons/icons/telephone.svg'
 import styles from './styles.module.scss'
-import { Link } from 'react-router-dom'
-import { ROUTER_PATHS } from 'app-constants/router-paths'
 import classNames from 'classnames'
+import { isObject } from 'lodash'
+import { readFileAsB64 } from 'utils/storage'
 
 type TProps = {
     employee: TEmployee
+    onClickShow: (id: number) => void
 }
 
-const EmployeeCard = ({ employee }: TProps): React.ReactElement => {
+const EmployeeCard = ({ employee, onClickShow }: TProps): React.ReactElement => {
     return (
         <Card>
             <Row className="g-0">
                 <Col xs="3" className="p-2 d-flex align-items-center justify-content-center">
                     <Image
                         src={
-                            employee.photo
-                                ? getAssetPath(employee.photo?.url)
+                            isObject(employee.photo)
+                                ? readFileAsB64(employee.photo?.path)
                                 : '/img/default-avatar.jpg'
                         }
                         className={styles.avatar}
@@ -48,17 +48,7 @@ const EmployeeCard = ({ employee }: TProps): React.ReactElement => {
                     </Card.Body>
 
                     <Card.Footer>
-                        <Button
-                            // @ts-ignore
-                            as={Link}
-                            to={getRouteWithParams(ROUTER_PATHS.EMPLOYEES.SHOW, [
-                                {
-                                    key: 'id',
-                                    value: employee.id,
-                                },
-                            ])}
-                            variant="secondary"
-                        >
+                        <Button onClick={() => onClickShow(employee.id)} variant="secondary">
                             Ver detalles
                         </Button>
                     </Card.Footer>

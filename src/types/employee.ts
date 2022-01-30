@@ -1,14 +1,14 @@
-import { TAsset } from './asset'
+import { TAsset, TNodeAsset } from './asset'
 
 export type TEmployee = {
-    id: string
+    id: number
     firstName: string
     lastName: string
     identificationCardId: string | null
     phone: string | null
     role: string | null
     status: 'active' | 'inactive' | 'away' | 'fired'
-    photo: TAsset | null
+    photo: TNodeAsset | string
     published_at: string
 }
 

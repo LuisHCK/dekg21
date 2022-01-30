@@ -12,8 +12,8 @@ import machineForm from 'pages/machine-form/slides'
 import { get, isObject } from 'lodash'
 import { TFormField } from 'types/machinery'
 import { TNodeAsset } from 'types/asset'
-import './styles.scss'
 import { readFileAsB64 } from 'utils/storage'
+import './styles.scss'
 
 const MachineryDetailsPage = (): React.ReactElement => {
     const { id } = useParams<{ id: string }>()

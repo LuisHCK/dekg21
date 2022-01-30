@@ -46,7 +46,7 @@ const EmployeeFormPage = (): React.ReactElement => {
         const data = flattenForm(employeeForm.formsets)
 
         if (id) {
-            await dispatch(UPDATE_EMPLOYEE({ id, data }))
+            await dispatch(UPDATE_EMPLOYEE({ id: Number(id), data }))
         } else {
             await dispatch(CREATE_EMPLOYEE({ data }))
         }
@@ -58,7 +58,7 @@ const EmployeeFormPage = (): React.ReactElement => {
 
     useEffect(() => {
         if (id) {
-            dispatch(GET_CURRENT_EMPLOYEE({ id }))
+            dispatch(GET_CURRENT_EMPLOYEE({ id: Number(id) }))
         }
 
         return () => {
@@ -83,7 +83,7 @@ const EmployeeFormPage = (): React.ReactElement => {
 
     return (
         <div>
-            <PageTitle title={id ? 'Editar Empleado' : 'Agregar empleado'}>
+            <PageTitle title={id ? 'Editar Colaborador' : 'Agregar colaborador'}>
                 <ButtonGroup>
                     <Button variant="warning" as={Link as any} to={ROUTER_PATHS.EMPLOYEES.ROOT}>
                         Cancelar

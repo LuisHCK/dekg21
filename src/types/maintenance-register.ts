@@ -8,11 +8,12 @@ export type TMaintenanceRegister = {
     machine: TMachinery | number
     activities: string
     date: string
+    expectedDates: string[]
 }
 
 export type TMaintenanceRegisterPayload = {
-    id: number | string
-    data?: Partial<TMaintenanceRegister>
+    id: number
+    data: Partial<TMaintenanceRegister>
 }
 
 export type TMaintenanceRegisterState = {

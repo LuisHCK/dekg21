@@ -15,6 +15,7 @@ import { flattenForm, getRouteWithParams } from 'utils/services'
 import { SELECT_MACHINERY_STATE } from 'store/selectors/machinery.selector'
 import { get } from 'lodash'
 import { ROUTER_PATHS } from 'app-constants/router-paths'
+import { toast } from 'react-toastify'
 
 const MachineryFormPage = (): React.ReactElement => {
     const { id } = useParams<{ id: string | undefined }>()
@@ -72,6 +73,7 @@ const MachineryFormPage = (): React.ReactElement => {
             } else {
                 history.push(ROUTER_PATHS.MACHINERY.ROOT)
             }
+            toast.success('Se guardó con éxito', { position: 'top-right' })
         }, 300)
     }
 

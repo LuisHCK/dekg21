@@ -26,7 +26,7 @@ const navLinks = [
     },
     {
         to: ROUTER_PATHS.EMPLOYEES.ROOT,
-        label: 'Empleados',
+        label: 'Colaboradores',
         icon: IconPeople,
     },
     {

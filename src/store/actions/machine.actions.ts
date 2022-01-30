@@ -4,7 +4,7 @@ import {
     listMachinery,
     showMachinery,
     updateMachine,
-} from 'backend/machinery.controller'
+} from 'backend/controllers/machinery.controller'
 import { TMachinery } from 'types/machinery'
 
 export const GET_MACHINERY = createAsyncThunk('MACHINERY/GET_MACHINERY', async () => {

@@ -1,5 +1,4 @@
 import { isObject } from 'lodash'
-import moment from 'moment'
 import React, { useMemo } from 'react'
 import { Button, Col, ListGroup, Modal, Row, Table } from 'react-bootstrap'
 import { TMachinery } from 'types/machinery'
@@ -16,22 +15,6 @@ type TProps = {
 const MaintenanceRegisterDetails = ({ show, onClose, register }: TProps): React.ReactElement => {
     const machine: TMachinery | undefined =
         typeof register?.machine === 'object' ? register.machine : undefined
-
-    const nextDates = useMemo(() => {
-        const dates: string[] = []
-
-        if (register) {
-            let startDate = moment(register.date)
-            let currentDate = moment(register.date)
-
-            while (currentDate.diff(startDate, 'years', true) < 1) {
-                currentDate.add(register.frequency, 'days')
-                dates.push(currentDate.toISOString().split('T')[0])
-            }
-        }
-
-        return dates
-    }, [register])
 
     const activities = useMemo(() => {
         if (register?.activities) {
@@ -55,7 +38,7 @@ const MaintenanceRegisterDetails = ({ show, onClose, register }: TProps): React.
                     <Col xs={12} sm={6}>
                         <img
                             className="img-fluid"
-                            src={isObject(machine?.photo) ?readFileAsB64(machine?.photo.path): ''}
+                            src={isObject(machine?.photo) ? readFileAsB64(machine?.photo.path) : ''}
                             alt={machine?.name}
                         />
                     </Col>
@@ -89,7 +72,7 @@ const MaintenanceRegisterDetails = ({ show, onClose, register }: TProps): React.
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {nextDates.map((date, index) => (
+                                    {register?.expectedDates.map((date, index) => (
                                         <tr key={`register-date-${date}`}>
                                             <td>{index + 1}</td>
                                             <td>{date}</td>
@@ -116,7 +99,6 @@ const MaintenanceRegisterDetails = ({ show, onClose, register }: TProps): React.
                 </Row>
             </Modal.Body>
             <Modal.Footer>
-                sadasd
                 <Button variant="secondary" onClick={onClose}>
                     Cerrar
                 </Button>
