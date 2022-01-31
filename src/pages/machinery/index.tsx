@@ -3,7 +3,7 @@ import PageTitle from 'components/page-title'
 import { Link } from 'react-router-dom'
 import { Card, Col, Row, Button, Spinner, Alert } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { GET_MACHINERY } from 'store/actions/machine.actions'
+import { GET_ALL_MACHINES } from 'store/actions/machine.actions'
 import { SELECT_MACHINERY_STATE } from 'store/selectors/machinery.selector'
 import { getRouteWithParams } from 'utils/services'
 import ClampLines from 'react-clamp-lines'
@@ -17,7 +17,7 @@ const Machinery = (): React.ReactElement => {
     const { loading, machines } = useSelector(SELECT_MACHINERY_STATE)
 
     useEffect(() => {
-        dispatch(GET_MACHINERY())
+        dispatch(GET_ALL_MACHINES())
     }, [dispatch])
 
     return (

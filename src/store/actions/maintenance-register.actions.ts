@@ -7,7 +7,7 @@ import {
     updateMaintenanceRegister,
 } from 'backend/controllers/maintenance-register.controller'
 
-export const GET_MAINTENANCE_REGISTERS = createAsyncThunk(
+export const GET_ALL_MAINTENANCE_REGISTERS = createAsyncThunk(
     'MAINTENANCE-REGISTER/GET_MAINTENANCE_REGISTERS',
     async () => {
         const response = await listMaintenanceRegisters()

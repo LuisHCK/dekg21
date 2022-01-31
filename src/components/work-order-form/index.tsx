@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 
 import { GET_ALL_EMPLOYEES } from 'store/actions/employee.actions'
 import { GET_ALL_PARTS } from 'store/actions/inventory.actions'
-import { GET_MACHINERY } from 'store/actions/machine.actions'
+import { GET_ALL_MACHINES } from 'store/actions/machine.actions'
 import { SELECT_EMPLOYEE_STATE } from 'store/selectors/employee.selector'
 import { SELECT_INVENTORY_STATE } from 'store/selectors/inventory.selector'
 import { SELECT_MACHINERY_STATE } from 'store/selectors/machinery.selector'
@@ -78,7 +78,7 @@ const WorkOrderForm = ({ onSave, onCancel }: TWorkOrderProps): React.ReactElemen
 
     useEffect(() => {
         dispatch(GET_ALL_EMPLOYEES())
-        dispatch(GET_MACHINERY())
+        dispatch(GET_ALL_MACHINES())
         dispatch(GET_ALL_PARTS())
     }, [dispatch])
 

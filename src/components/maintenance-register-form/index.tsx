@@ -4,7 +4,7 @@ import { Button, Modal } from 'react-bootstrap'
 
 import ContentForm from 'components/content-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { GET_MACHINERY } from 'store/actions/machine.actions'
+import { GET_ALL_MACHINES } from 'store/actions/machine.actions'
 import {
     CREATE_MAINTENANCE_REGISTER,
     UPDATE_MAINTENANCE_REGISTER,
@@ -52,7 +52,7 @@ const MaintenanceRegisterForm = ({ show, onClose }: IProps): React.ReactElement 
     }
 
     useEffect(() => {
-        dispatch(GET_MACHINERY())
+        dispatch(GET_ALL_MACHINES())
     }, [dispatch])
 
     useEffect(() => {

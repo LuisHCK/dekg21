@@ -80,3 +80,8 @@ export type TFormSet = {
 export type TMachineryForm = {
     formsets: TFormSet[]
 }
+
+export type TWorkOrdersPerMachine = {
+    machine: TMachinery
+    workOrders: number
+}

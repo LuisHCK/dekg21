@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 import {
-    GET_MACHINERY,
+    GET_ALL_MACHINES,
     SET_CURRENT_MACHINE,
     SET_MACHINERY_FORM,
     SUBMIT_MACHINERY_FORM,
@@ -9,17 +9,17 @@ import {
 import { machineryInitialState } from 'store/states/machinery.state'
 
 export const machineryReducer = createReducer(machineryInitialState, (builder) => {
-    builder.addCase(GET_MACHINERY.pending, (state) => ({
+    builder.addCase(GET_ALL_MACHINES.pending, (state) => ({
         ...state,
         loading: true,
     }))
 
-    builder.addCase(GET_MACHINERY.rejected, (state) => ({
+    builder.addCase(GET_ALL_MACHINES.rejected, (state) => ({
         ...state,
         loading: false,
     }))
 
-    builder.addCase(GET_MACHINERY.fulfilled, (state, { payload }) => ({
+    builder.addCase(GET_ALL_MACHINES.fulfilled, (state, { payload }) => ({
         ...state,
         machines: payload,
         loading: false,

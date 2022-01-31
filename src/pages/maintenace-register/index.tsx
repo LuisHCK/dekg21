@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
     CLEAN_CURRENT_MAINTENANCE_REGISTER,
     GET_CURRENT_MAINTENANCE_REGISTER,
-    GET_MAINTENANCE_REGISTERS,
+    GET_ALL_MAINTENANCE_REGISTERS,
 } from 'store/actions/maintenance-register.actions'
 import { SELECT_MAINTENANCE_STATE } from 'store/selectors/maintenance-register.selector'
 import { TTableColumn } from 'types/table'
@@ -101,7 +101,7 @@ const MainteanceRegisterPage = (): React.ReactElement => {
     }
 
     useEffect(() => {
-        dispatch(GET_MAINTENANCE_REGISTERS())
+        dispatch(GET_ALL_MAINTENANCE_REGISTERS())
     }, [dispatch])
 
     return (

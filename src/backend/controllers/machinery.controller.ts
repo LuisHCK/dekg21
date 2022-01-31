@@ -1,8 +1,10 @@
 import database from 'database'
 import { isString } from 'lodash'
-import { TMachinery } from 'types/machinery'
+import { TMachinery, TWorkOrdersPerMachine } from 'types/machinery'
+import { TWorkOrder } from 'types/work-order'
 
 const MachineryTable = database.table<TMachinery>('machinery')
+const WorkOrderTable = database.table<TWorkOrder>('workOrder')
 
 export const listMachinery = async (): Promise<TMachinery[]> => {
     return await MachineryTable.toArray()
@@ -48,4 +50,18 @@ export const updateMachine = async (id: number, data: Partial<TMachinery>): Prom
         return machine
     }
     throw Error('Machine not found')
+}
+
+export const workOrdersPerMachine = async (): Promise<TWorkOrdersPerMachine[]> => {
+    const machines = await MachineryTable.toArray()
+
+    return await Promise.all(
+        machines.map(async (machine) => {
+            const workOrders = await WorkOrderTable.where('machine').equals(machine.id).count()
+            return {
+                machine,
+                workOrders,
+            }
+        }),
+    )
 }

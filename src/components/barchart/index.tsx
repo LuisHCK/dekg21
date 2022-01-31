@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Bar } from 'react-chartjs-2'
 import {
     Chart as ChartJS,
@@ -10,6 +10,8 @@ import {
     Legend,
 } from 'chart.js'
 import styles from './styles.module.scss'
+import { TWorkOrdersPerMachine } from 'types/machinery'
+import { workOrdersPerMachine } from 'backend/controllers/machinery.controller'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -27,28 +29,41 @@ export const options = {
     },
 }
 
-const labels = [
-    'SECADOR DE CAMARA HORIZONTAL DHNP - 120 IX',
-    'Clasificadora optica por color',
-    'Mesa Paddy',
-]
-
-export const data = {
-    labels,
-    datasets: [
-        {
-            label: 'Maquina',
-            data: [6, 4, 7],
-            backgroundColor: 'rgb(54 85 120)',
-            barThickness: 20,
-        },
-    ],
-}
-
 const BarChart = (): React.ReactElement => {
+    const [dataList, setDataList] = useState<TWorkOrdersPerMachine[]>([])
+
+    const data = useMemo(
+        () => ({
+            labels: dataList.map((item) => item.machine.name),
+            data: dataList.map((item) => item.workOrders),
+        }),
+        [dataList],
+    )
+
+    const chartData = {
+        labels: data.labels,
+        datasets: [
+            {
+                label: 'Maquina',
+                data: data.data,
+                backgroundColor: 'rgb(54 85 120)',
+                barThickness: 20,
+                minBarLength: 3,
+            },
+        ],
+    }
+
+    useEffect(() => {
+        const getDataList = async () => {
+            setDataList(await workOrdersPerMachine())
+        }
+
+        getDataList()
+    }, [])
+
     return (
         <div className={styles.chartContainer}>
-            <Bar options={options} data={data} />
+            <Bar options={options} data={chartData} />
         </div>
     )
 }

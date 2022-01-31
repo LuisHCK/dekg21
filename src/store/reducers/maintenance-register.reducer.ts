@@ -3,26 +3,26 @@ import {
     CLEAN_CURRENT_MAINTENANCE_REGISTER,
     CREATE_MAINTENANCE_REGISTER,
     GET_CURRENT_MAINTENANCE_REGISTER,
-    GET_MAINTENANCE_REGISTERS,
+    GET_ALL_MAINTENANCE_REGISTERS,
     UPDATE_MAINTENANCE_REGISTER,
 } from 'store/actions/maintenance-register.actions'
 import { InitialMaintenanceRegisterState } from 'store/states/maintenance-register.state'
 
 const maintenanceRegisterReducer = createReducer(InitialMaintenanceRegisterState, (builder) => {
     // LIST
-    builder.addCase(GET_MAINTENANCE_REGISTERS.pending, (state) => ({
+    builder.addCase(GET_ALL_MAINTENANCE_REGISTERS.pending, (state) => ({
         ...state,
         loading: true,
         error: false,
     }))
 
-    builder.addCase(GET_MAINTENANCE_REGISTERS.rejected, (state) => ({
+    builder.addCase(GET_ALL_MAINTENANCE_REGISTERS.rejected, (state) => ({
         ...state,
         loading: false,
         error: true,
     }))
 
-    builder.addCase(GET_MAINTENANCE_REGISTERS.fulfilled, (state, { payload }) => ({
+    builder.addCase(GET_ALL_MAINTENANCE_REGISTERS.fulfilled, (state, { payload }) => ({
         ...state,
         loading: false,
         error: false,
