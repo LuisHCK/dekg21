@@ -1,4 +1,3 @@
-import moment from 'moment'
 import { TFormSet } from 'types/machinery'
 
 export const getAppName = (): string | undefined => process.env.REACT_APP_WEBSITE_NAME

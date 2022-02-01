@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import API_ROUTES from 'app-constants/api-routes'
-import { IPostUser, IUser } from 'types/user'
+import { IPostUser } from 'types/user'
 import { getAllUsers } from 'backend/controllers/user.controller'
 import database from 'database'
 

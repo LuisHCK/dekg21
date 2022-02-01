@@ -53,7 +53,7 @@ const LoginPage = (): React.ReactElement => {
     useEffect(() => {
         if (user && !loading) {
             history.push(ROUTER_PATHS.HOME.ROOT)
-            toast.success(`Bienvenido ${user.firstName} ${user.lastName}`, {
+            toast.success(`Bienvenido ${user.email}`, {
                 position: 'top-right',
             })
         }
