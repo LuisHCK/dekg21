@@ -1,10 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import {
-    AUTH_CLEAN_REQUEST_STATUS,
-    AUTH_LOGIN,
-    AUTH_REGISTER,
-    GET_USER_PROFILE,
-} from 'store/actions/auth'
+import { AUTH_CLEAN_REQUEST_STATUS, AUTH_LOGIN, AUTH_REGISTER } from 'store/actions/auth'
 import { authInitialState } from 'store/states/auth'
 
 export const authReducer = createReducer(authInitialState, (builder) => {
@@ -59,23 +54,5 @@ export const authReducer = createReducer(authInitialState, (builder) => {
             error: false,
             user: undefined,
         }
-    })
-
-    // Load user profile
-    builder.addCase(GET_USER_PROFILE.pending, (state) => ({
-        ...state,
-        loading: true,
-        error: false,
-    }))
-
-    builder.addCase(GET_USER_PROFILE.rejected, (state) => ({
-        ...state,
-        loading: false,
-        error: true,
-    }))
-
-    builder.addCase(GET_USER_PROFILE.fulfilled, (state, { payload }) => {
-        localStorage.setItem('currentUser', JSON.stringify(payload))
-        return { ...state, loading: false, error: false, user: payload }
     })
 })

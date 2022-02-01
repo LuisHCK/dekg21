@@ -1,34 +1,8 @@
-import Cookies from 'js-cookie'
 import moment from 'moment'
 import { TFormSet } from 'types/machinery'
 
 export const getAppName = (): string | undefined => process.env.REACT_APP_WEBSITE_NAME
 export const getServerURL = (): string | undefined => process.env.REACT_APP_SERVER_URL
-
-/**
- * Check if the current token is valid
- */
-export const isAuthenticated = (): boolean => {
-    const authTokenExists = !!Cookies.get('authToken')
-    const dateNow = moment()
-    const authExpiration = moment(Number(Cookies.get('tokenExpiration')))
-
-    if (authExpiration.isValid() && authTokenExists) {
-        return authExpiration > dateNow
-    }
-
-    if (authExpiration.isValid()) {
-        console.error('Auth token expiration invalid')
-    }
-
-    return false
-}
-
-export const cleanUserSession = (): void => {
-    Cookies.remove('authToken')
-    Cookies.remove('tokenExpiration')
-    Cookies.remove('user')
-}
 
 export const getAssetPath = (relativePath?: string): string => {
     return relativePath ? `${getServerURL()}${relativePath}` : ''
