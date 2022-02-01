@@ -16,6 +16,10 @@ const createMainWindow = () => {
     })
     const startURL = 'http://localhost:3001'
 
+    if (!isDev) {
+        mainWindow.setMenu(null)
+    }
+
     mainWindow.loadURL(isDev ? startURL : `file://${path.join(__dirname, '../build/index.html')}`)
 
     mainWindow.once('ready-to-show', () => mainWindow.show())
