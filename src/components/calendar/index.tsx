@@ -29,7 +29,9 @@ const Calendar = (): React.ReactElement => {
                 .map((register) =>
                     register.expectedDates.map((date) => ({
                         id: `register-${register.id}-${date}`,
-                        title: isObject(register.machine) ? register.machine.name : '',
+                        title: isObject(register.machine)
+                            ? `Mantenimiento programado: ${register.machine.name}`
+                            : '',
                         start: moment(date).toDate(),
                         end: moment(date).add('1', 'day').toDate(),
                         item: '',
@@ -68,7 +70,7 @@ const Calendar = (): React.ReactElement => {
                     events={eventsPerMachine}
                     startAccessor="start"
                     endAccessor="end"
-                    style={{ height: 480 }}
+                    style={{ height: 580 }}
                     messages={messages}
                     views={{ month: true, agenda: true }}
                     onSelectEvent={handleSelection}

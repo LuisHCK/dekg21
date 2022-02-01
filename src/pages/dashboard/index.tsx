@@ -12,6 +12,7 @@ import { SELECT_EMPLOYEE_STATE } from 'store/selectors/employee.selector'
 import DashboardCardItem from 'components/dashboard-card-item'
 import { SELECT_MACHINERY_STATE } from 'store/selectors/machinery.selector'
 import { SELECT_WORK_ORDER_STATE } from 'store/selectors/work-order.selectors'
+import { GET_WORK_ORDERS } from 'store/actions/work-order.reducer'
 
 const DasboardPage = (): React.ReactElement => {
     const { employees } = useSelector(SELECT_EMPLOYEE_STATE)
@@ -48,6 +49,7 @@ const DasboardPage = (): React.ReactElement => {
         dispatch(GET_ALL_MAINTENANCE_REGISTERS())
         dispatch(GET_ALL_MACHINES())
         dispatch(GET_ALL_MAINTENANCE_REGISTERS())
+        dispatch(GET_WORK_ORDERS())
     }, [dispatch])
 
     return (
@@ -67,11 +69,11 @@ const DasboardPage = (): React.ReactElement => {
 
             <Row>
                 <Col xs={12} sm={12}>
-                    <BarChart />
+                    <Calendar />
                 </Col>
 
                 <Col xs={12} sm={12}>
-                    <Calendar />
+                    <BarChart />
                 </Col>
             </Row>
         </div>

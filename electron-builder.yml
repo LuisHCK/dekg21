@@ -19,7 +19,7 @@ asar: true
 
 # Windows configuration
 win:
-    icon: "src/public/favicon.ico"
+    icon: "build/icon.ico"
     target:
         - 'zip'
         - 'nsis'
