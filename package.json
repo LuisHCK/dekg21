@@ -1,7 +1,7 @@
 {
     "name": "pwa",
-    "version": "1.1.5",
-    "private": true,
+    "version": "1.1.6",
+    "private": false,
     "license": "GPL V3",
     "author": {
         "name": "DEK-G21"
