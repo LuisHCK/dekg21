@@ -8,5 +8,5 @@ export interface ICompany {
 }
 
 export interface IConfig {
-    company: ICompany
+    [key: string]: string | number | undefined | null
 }

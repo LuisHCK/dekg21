@@ -7,10 +7,13 @@ import { Button } from 'react-bootstrap'
 import { flattenForm, formIsValid } from 'utils/services'
 import { toast } from 'react-toastify'
 import { createOrUpdateSettings, getSettingsByName } from 'backend/controllers/settings.controller'
+import { useDispatch } from 'react-redux'
+import { SET_GLOBAL_SETTINGS } from 'store/actions/config.actions'
 
 const GeneralSettings = (): React.ReactElement => {
     const [formLoaded, setFormLoaded] = useState(false)
     const [formData, setFormData] = useState<TFormSet>(formset)
+    const dispatch = useDispatch()
 
     const handleChange = (data: TFormSet) => {
         setFormData(data)
@@ -20,8 +23,13 @@ const GeneralSettings = (): React.ReactElement => {
         if (formIsValid([formData])) {
             const value = flattenForm([formData])
             await createOrUpdateSettings({ name: 'general-settings', value })
-                .then(() => toast.success('Se guardó con éxito'))
+                .then(() => {
+                    toast.success('Se guardó con éxito')
+                    dispatch(SET_GLOBAL_SETTINGS(value))
+                })
                 .catch(() => toast.error('No se pudo guardar.\nPor favor revisa el formulario'))
+
+            return
         }
 
         toast.error('No se pudo guardar.\nPor favor revisa el formulario')
@@ -33,7 +41,7 @@ const GeneralSettings = (): React.ReactElement => {
 
             const updatedFields = formset.fields.map((field) => ({
                 ...field,
-                value: get(settings, field.name),
+                value: get(settings.value, field.name) || '',
             }))
 
             setFormData({ ...formData, fields: updatedFields })

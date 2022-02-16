@@ -1,12 +1,8 @@
-import { IConfig } from "types/config";
+import { IConfig } from 'types/config'
 
 export const configInitialState: IConfig = {
-    company: {
-        _id: '',
-        name: '',
-        email: '',
-        legalId: '',
-        logo: '',
-        phone: ''
-    }
+    address: undefined,
+    companyName: undefined,
+    logo: undefined,
+    phone: undefined,
 }
