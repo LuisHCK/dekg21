@@ -1,4 +1,5 @@
 import React from 'react'
+import DatabaseImportButton from 'components/database-import'
 import { Button, Form, Spinner } from 'react-bootstrap'
 import { TFormData } from 'types/user'
 
@@ -40,6 +41,7 @@ const LoginForm = ({ handleSubmit, formData, handleInputChange, loading, isRegis
                 variant="primary"
                 type="submit"
                 disabled={!formData.identifier && !formData.password}
+                className="mr-2"
             >
                 {loading ? (
                     <Spinner animation="border" role="status" size="sm" />
@@ -49,6 +51,8 @@ const LoginForm = ({ handleSubmit, formData, handleInputChange, loading, isRegis
                     'Iniciar sesión'
                 )}
             </Button>
+
+            <DatabaseImportButton className="ms-2" />
         </Form>
     )
 }

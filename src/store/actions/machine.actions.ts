@@ -22,6 +22,8 @@ export const SET_CURRENT_MACHINE = createAsyncThunk(
 
 export const SET_MACHINERY_FORM = createAction<Partial<TMachinery>>('MACHINERY/SET_MACHINERY_FORM')
 
+export const CLEAN_CURRENT_MACHINE = createAction('MACHINERY/CLEAN_CURRENT_MACHINE')
+
 export const SUBMIT_MACHINERY_FORM = createAsyncThunk(
     'MACHINERY/SUBMIT_MACHINERY_FORM',
     async (payload: Partial<TMachinery>) => {

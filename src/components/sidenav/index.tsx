@@ -7,6 +7,7 @@ import { ReactComponent as IconWrench } from 'bootstrap-icons/icons/wrench.svg'
 import { ReactComponent as IconJournal } from 'bootstrap-icons/icons/journal-check.svg'
 import { ReactComponent as IconList } from 'bootstrap-icons/icons/list-task.svg'
 import { ReactComponent as IconExit } from 'bootstrap-icons/icons/box-arrow-left.svg'
+import { ReactComponent as IconSettings } from 'bootstrap-icons/icons/sliders.svg'
 
 import NavLink from './navlink'
 
@@ -43,6 +44,11 @@ const navLinks = [
         to: ROUTER_PATHS.INVENTORY.ROOT,
         label: 'Inventario',
         icon: IconList,
+    },
+    {
+        to: ROUTER_PATHS.SETTINGS.ROOT,
+        label: 'Ajustes',
+        icon: IconSettings,
     },
 ]
 

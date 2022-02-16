@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 import {
+    CLEAN_CURRENT_MACHINE,
     GET_ALL_MACHINES,
     SET_CURRENT_MACHINE,
     SET_MACHINERY_FORM,
@@ -73,5 +74,11 @@ export const machineryReducer = createReducer(machineryInitialState, (builder) =
         currentMachine: payload,
         loading: false,
         error: true,
+    }))
+
+    // Clean current machine
+    builder.addCase(CLEAN_CURRENT_MACHINE, (state) => ({
+        ...state,
+        currentMachine: null,
     }))
 })

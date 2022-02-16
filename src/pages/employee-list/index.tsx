@@ -29,6 +29,11 @@ const EmployeeListPage = (): React.ReactElement => {
         setShowDetails(false)
     }
 
+    const handleCloseForm = () => {
+        setShowForm(false)
+        dispatch(CLEAN_CURRENT_EMPLOYEE())
+    }
+
     const handleEdit = () => {
         setShowDetails(false)
         setShowForm(true)
@@ -60,7 +65,7 @@ const EmployeeListPage = (): React.ReactElement => {
 
             {!employees.length && <Alert variant="warning">No hay colaboradores registrados</Alert>}
 
-            <EmployeeForm show={showForm} onClose={() => setShowForm(false)} />
+            <EmployeeForm show={showForm} onClose={handleCloseForm} />
 
             <EmployeeDetailsModal show={showDetails} onClose={handleClose} onEdit={handleEdit} />
         </div>

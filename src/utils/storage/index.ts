@@ -1,26 +1,29 @@
-import { execSync } from 'child_process'
 import { remote } from 'electron'
 import fs from 'fs'
 import path from 'path'
+import { lookup } from 'mime-types'
 import { TStoreFileParams } from 'types/utils'
 
-const APP_DATA_PATH = path.join(remote.app.getPath('userData'), 'userData')
+export const APP_DATA_PATH = path.join(remote.app.getPath('userData'), 'userData')
+export const DOCUMENTS_PATH = path.join(remote.app.getPath('documents'), 'DEK-G21')
 
-const verifyPath = () => {
-    if (!fs.existsSync(APP_DATA_PATH)) {
-        fs.mkdirSync(APP_DATA_PATH, { recursive: true })
+const verifyPath = (targetPath: string) => {
+    if (!fs.existsSync(targetPath)) {
+        fs.mkdirSync(targetPath, { recursive: true })
     }
 }
 
 function getMimeFromPath(filePath: string) {
-    const mimeType = execSync('file --mime-type -b "' + filePath + '"').toString()
-    return mimeType.trim()
+    const extension = filePath.split('.').pop() || ''
+    const mime = lookup(extension)
+
+    return mime || ''
 }
 
-export const storeFile = async ({ file, name }: TStoreFileParams): Promise<string> => {
-    verifyPath()
+export const storeFile = async ({ file, name, customPath }: TStoreFileParams): Promise<string> => {
+    verifyPath(customPath || APP_DATA_PATH)
 
-    const filePath = path.join(APP_DATA_PATH, name)
+    const filePath = path.join(customPath || APP_DATA_PATH, name)
     const fileArrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(fileArrayBuffer)
     fs.writeFileSync(filePath, buffer)

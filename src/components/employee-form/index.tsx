@@ -69,6 +69,7 @@ const EmployeeForm = ({ show, onClose }: TProps): React.ReactElement => {
     useEffect(() => {
         if (!show) {
             setFormLoaded(false)
+            setEmployeeForm(form)
         }
     }, [show])
 

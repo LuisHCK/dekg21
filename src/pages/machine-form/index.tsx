@@ -7,6 +7,7 @@ import ContentForm from 'components/content-form'
 import machineFormSlides from './slides'
 import { TFormSet, TMachineryForm } from 'types/machinery'
 import {
+    CLEAN_CURRENT_MACHINE,
     SET_CURRENT_MACHINE,
     SUBMIT_MACHINERY_FORM,
     UPDATE_MACHINERY_FORM,
@@ -106,6 +107,13 @@ const MachineryFormPage = (): React.ReactElement => {
             setDataLoaded(true)
         }
     }, [currentMachine, machineryForm, dataLoaded])
+
+    useEffect(() => {
+        return () => {
+            setMachineryForm(machineFormSlides)
+            dispatch(CLEAN_CURRENT_MACHINE())
+        }
+    }, [dispatch])
 
     return (
         <div className="container-fluid">

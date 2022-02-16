@@ -35,4 +35,7 @@ export const ROUTER_PATHS = {
         EDIT: '/inventario/editar/:id',
         SHOW: '/inventario/detalles/:id',
     },
+    SETTINGS: {
+        ROOT: '/ajustes',
+    },
 }

@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import PageTitle from 'components/page-title'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+    CLEAN_CURRENT_WORK_ORDER,
     CREATE_WORK_ORDER,
     GET_CURRENT_WORK_ORDER,
     GET_WORK_ORDERS,
@@ -31,6 +32,21 @@ const WorkOrdersPage = (): React.ReactElement => {
     const toggleForm = () => setShowForm((prev) => !prev)
 
     const toggleDetails = () => setShowDetails((prev) => !prev)
+
+    const openCreateForm = () => {
+        dispatch(CLEAN_CURRENT_WORK_ORDER())
+        setTimeout(() => {
+            toggleForm()
+        }, 100)
+    }
+
+    const handleHide = () => {
+        toggleForm()
+
+        setTimeout(() => {
+            dispatch(CLEAN_CURRENT_WORK_ORDER())
+        }, 300)
+    }
 
     const saveWorkOrder = async (data: TWorkOrderPostBody) => {
         if (currentOrder) {
@@ -95,7 +111,7 @@ const WorkOrdersPage = (): React.ReactElement => {
     return (
         <div>
             <PageTitle title="Órdenes de trabajo">
-                <Button variant="primary" onClick={toggleForm}>
+                <Button variant="primary" onClick={openCreateForm}>
                     Registar trabajo
                 </Button>
             </PageTitle>
@@ -125,7 +141,7 @@ const WorkOrdersPage = (): React.ReactElement => {
                 </tbody>
             </Table>
 
-            <Modal show={showForm} onHide={toggleForm} size="lg" backdrop="static">
+            <Modal show={showForm} onHide={handleHide} size="lg" backdrop="static">
                 <Modal.Header closeButton>
                     <Modal.Title>
                         {currentOrder?.id ? 'Editar' : 'Registrar'} orden de trabajo
